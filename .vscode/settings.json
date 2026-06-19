@@ -1,0 +1,14 @@
+{
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "chat.instructionsFilesLocations": [
+    ".github/agents/copilot-agent.md",
+    ".github/instructions/api-patterns.instructions.md",
+    ".github/instructions/testing.instructions.md",
+    ".github/instructions/security.instructions.md"
+  ],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
