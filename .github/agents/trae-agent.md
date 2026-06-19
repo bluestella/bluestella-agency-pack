@@ -5,6 +5,7 @@ Scope: Rules apply project-wide unless a nested .trae/rules/ file overrides
 Recursive depth: Trae reads rules up to 3 directory levels deep
 
 Technology stack:
+
 - TypeScript 5.x
 - Node.js 20 LTS
 - pnpm
@@ -15,6 +16,7 @@ Technology stack:
 - Auth.js v5
 
 Workflow commands:
+
 - Install: pnpm install
 - Dev: pnpm dev
 - Test: pnpm vitest run --coverage
@@ -23,7 +25,7 @@ Workflow commands:
 - Build: pnpm build
 
 NEVER modify: db/migrations/**
-NEVER modify: .env*
+NEVER modify: .env\*
 NEVER modify: infra/**
 NEVER introduce silent catch blocks
 NEVER perform hard-deletes of production data

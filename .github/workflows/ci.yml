@@ -3,9 +3,9 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   lint:
@@ -99,4 +99,3 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm build
-
