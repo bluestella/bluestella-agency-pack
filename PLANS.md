@@ -24,7 +24,11 @@ Reference:
     - Threat Modelling using STRIDE
     - Hook back to generate a requirement and then run the cycle again.
   - Frontend development
+    - Write a code
+    - Do a code review
   - Backend development
+    - Write a code
+    - Do a code review
   - QA Testing
     - Visual Testing
     - Unit Testing
@@ -37,4 +41,4 @@ Reference:
     - When there are issues seen by QA. Generate a bugs and issues documentation. List down all the bugs as a checklist. Monitor or track the progress status which are todo, in progress, and done.
     - Assign the bugs back the to agent to run the cycle again.
   - DevOps
-    - Deploy to Vercel App3
+    - Deploy to Vercel App.
