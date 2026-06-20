@@ -1,430 +1,73 @@
 ---
 name: c4-architecture-diagramming
-description: Generates C4 model architecture diagrams (Context, Container, Component, Code levels) using Mermaid.js showing system structure, dependencies, and technology choices. WHEN: Documenting system architecture, creating architecture decisions, sharing architecture with team, designing new system structure, cross-team architecture alignment.
+description: >
+  Generates C4 model architecture diagrams (Context, Container, Component, Code levels)
+  using Mermaid.js showing system structure, dependencies, and technology choices.
+  Use when documenting system architecture, creating architecture decisions, sharing
+  architecture with a team, designing new system structure, or aligning cross-team
+  understanding of the current or target-state architecture.
+metadata:
+  author: bluestella
+  version: "1.0"
 ---
 
-# C4 Architecture Diagramming Skill
+# C4 Architecture Diagramming
 
 ## Overview
 
-The C4 model is a hierarchical approach to visualizing software architecture at four levels of abstraction:
+The C4 model visualizes software architecture at four levels of abstraction — from the big picture down to implementation detail. This skill produces Mermaid.js diagrams for one or more C4 levels, depending on the audience and purpose. Diagrams are embedded directly in markdown and render in GitHub, Notion, and most documentation tools.
 
-1. **Context** — System in relation to other systems and users
-2. **Container** — High-level building blocks (frontend, backend, database, etc.)
-3. **Component** — Internal structure of containers
-4. **Code** — Implementation details (classes, functions)
+## C4 Levels
 
-This skill helps architects create clear, consistent architecture diagrams using Mermaid.js.
+| Level       | Audience                | Shows                                                   |
+| ----------- | ----------------------- | ------------------------------------------------------- |
+| 1 — Context  | Everyone, non-technical | System + its users + external systems                   |
+| 2 — Container | Developers, architects  | Frontend, backend, DB, queues — tech choices included   |
+| 3 — Component | Developers              | Internal structure of one container (modules, services) |
+| 4 — Code     | Developers              | Classes, functions — usually auto-generated from IDE    |
 
----
+## Steps
 
-## Level 1: System Context
+1. **Identify the scope.** Which level(s) are needed? Context for stakeholder communication; Container for architecture alignment; Component for sprint planning.
+2. **List system elements.** For Context: users + external systems. For Container: all major technical building blocks. For Component: internal modules of the selected container.
+3. **Draw data flows.** Label each arrow with the verb (sends, reads, triggers, queries). Keep flows directional.
+4. **Choose the right Mermaid diagram type.** Use `graph TB` for C4 Context/Container/Component. Use `erDiagram` for data models. Use `sequenceDiagram` for flows.
+5. **Apply technology labels.** In Container and below, add `[Technology]` in the node label (e.g., `React SPA`, `PostgreSQL 16`).
+6. **Embed in the relevant document.** ADR, BRD, or architecture design doc. Link the diagram file from the ADR or design doc.
 
-**Purpose:** Show what the system does and who uses it (no technical details)
+## Output Format
 
-**Elements:**
+Mermaid code blocks embedded in markdown:
 
-- The system being built (centered box)
-- External users and systems it interacts with
-- High-level data flows
-
-**Mermaid Syntax:**
-
+````markdown
 ```mermaid
 graph TB
-    User["👤 User"]
-    Email["📧 Email Service<br/>(SendGrid)"]
-    Payment["💳 Payment Processor<br/>(Stripe)"]
-
-    System["🎯 Registration System<br/>(Our App)"]
-
-    User -->|Signs up| System
-    System -->|Sends verification email| Email
-    System -->|Processes payment| Payment
-    Email -->|Confirms email| User
-    Payment -->|Payment status| System
+    [node definitions]
+    [relationships with labels]
 ```
+````
 
-**Questions to Answer:**
+One fenced block per level. Nodes use double-quoted labels with `<br/>` for line breaks.
 
-- Who are the main users/actors?
-- What external systems does this integrate with?
-- What are the primary data flows?
+Templates: [`templates/c4-templates.md`](templates/c4-templates.md)
 
----
+## Examples
 
-## Level 2: Container Architecture
+**Input:** "Show the system context for a SaaS registration app."
 
-**Purpose:** Show the major building blocks and technology choices
+**Output:** Level 1 Context diagram — central system box, User actor, SendGrid (email), Stripe (payment). Arrows labeled "Signs up", "Sends verification email", "Processes payment".
 
-**Elements:**
+**Input:** "Show the container architecture for the same app."
 
-- Containers (frontend, backend, database, cache, etc.)
-- Technology choices for each container
-- Communication protocols between containers
+**Output:** Level 2 Container diagram — React SPA (frontend), Next.js API (backend), PostgreSQL (DB), Redis (cache), SendGrid and Stripe as external boxes. Tech stack labels on each container.
 
-**Mermaid Syntax:**
+## Edge Cases
 
-```mermaid
-graph TB
-    subgraph Client["Client"]
-        Web["🌐 React Web<br/>(TypeScript, Next.js)"]
-        Mobile["📱 React Native<br/>(iOS/Android)"]
-    end
-
-    subgraph API["API Layer"]
-        Serverless["⚡ Vercel Serverless<br/>(Node.js, TypeScript)"]
-    end
-
-    subgraph Data["Data Layer"]
-        DB["🗄️ PostgreSQL 16<br/>(Primary)"]
-        Cache["⚡ Redis<br/>(Session cache)"]
-    end
-
-    subgraph Ext["External Services"]
-        Email["📧 SendGrid"]
-        Payment["💳 Stripe"]
-    end
-
-    Web -->|REST/GraphQL| Serverless
-    Mobile -->|REST/GraphQL| Serverless
-    Serverless -->|SQL| DB
-    Serverless -->|Cache| Cache
-    Serverless -->|HTTPS| Email
-    Serverless -->|HTTPS| Payment
-```
-
-**Questions to Answer:**
-
-- What are the major technology components?
-- How do they communicate (HTTP, gRPC, events)?
-- What database/cache tech is used?
-- What third-party services are integrated?
-
----
-
-## Level 3: Component Architecture
-
-**Purpose:** Show the internal structure of a container
-
-**Elements:**
-
-- Components (layers, services, modules)
-- Component interactions
-- Data flow within the container
-
-**Mermaid Syntax (Backend Example):**
-
-```mermaid
-graph TB
-    subgraph API["API Layer"]
-        Routes["🛣️ Route Handlers<br/>(express/next)"]
-    end
-
-    subgraph BL["Business Logic"]
-        Auth["🔐 Auth Service<br/>(JWT, OAuth)"]
-        User["👤 User Service<br/>(Create, Update)"]
-        Email["📧 Email Service<br/>(Notification)"]
-    end
-
-    subgraph DAL["Data Access Layer"]
-        Repo["📦 Repository Layer<br/>(Drizzle ORM)"]
-    end
-
-    subgraph EXT["External"]
-        SendGrid["📧 SendGrid API"]
-        Stripe["💳 Stripe API"]
-    end
-
-    Routes -->|Calls| Auth
-    Routes -->|Calls| User
-    Auth -->|Calls| Repo
-    User -->|Calls| Repo
-    Repo -->|SQL Queries| DB["🗄️ PostgreSQL"]
-    Email -->|HTTP| SendGrid
-    User -->|HTTP| Stripe
-```
-
-**Questions to Answer:**
-
-- What are the main layers (API, Business Logic, Data Access)?
-- What services/modules exist?
-- How do they interact?
-- What external APIs are called?
-
----
-
-## Level 4: Code Architecture
-
-**Purpose:** Show implementation details (classes, functions, design patterns)
-
-This is typically documented in code comments, TypeScript interfaces, or a separate design document. Not usually drawn as a diagram, but rather represented as type definitions:
-
-```typescript
-// API Routes
-interface SignupRequest {
-  email: string;
-  password: string;
-}
-
-interface SignupResponse {
-  user: User;
-  token: string;
-}
-
-// Business Logic
-class AuthService {
-  async signup(req: SignupRequest): Promise<SignupResponse> {
-    // Validate input
-    // Hash password
-    // Create user in DB
-    // Send verification email
-    // Return token
-  }
-}
-
-// Data Access
-class UserRepository {
-  async create(user: User): Promise<User>;
-  async findByEmail(email: string): Promise<User | null>;
-  async update(id: string, user: Partial<User>): Promise<User>;
-}
-```
-
----
-
-## Complete C4 Example: User Registration System
-
-### Level 1: System Context
-
-```mermaid
-graph TB
-    User["👤 User"]
-    EmailProvider["📧 SendGrid"]
-    PaymentProvider["💳 Stripe"]
-    System["🎯 Registration System"]
-
-    User -->|1. Signs up| System
-    System -->|2. Sends email| EmailProvider
-    System -->|3. Processes payment| PaymentProvider
-    EmailProvider -->|4. Email received| User
-```
-
-### Level 2: Container Architecture
-
-```mermaid
-graph TB
-    subgraph Client["Client Layer"]
-        Web["React Web"]
-        Mobile["React Native"]
-    end
-
-    subgraph Backend["Backend Layer"]
-        API["Vercel Serverless<br/>(TypeScript)"]
-    end
-
-    subgraph Data["Data Layer"]
-        PDB["PostgreSQL 16"]
-        Redis["Redis Cache"]
-    end
-
-    subgraph External["External Services"]
-        SG["SendGrid API"]
-        Stripe["Stripe API"]
-    end
-
-    Web -->|REST| API
-    Mobile -->|REST| API
-    API -->|SQL| PDB
-    API -->|Cache Get/Set| Redis
-    API -->|HTTPS| SG
-    API -->|HTTPS| Stripe
-```
-
-### Level 3: Component (Backend)
-
-```mermaid
-graph TB
-    subgraph Routes["HTTP Routes"]
-        POST["POST /auth/signup"]
-        GET["GET /auth/verify/:token"]
-    end
-
-    subgraph Services["Business Services"]
-        AuthSvc["AuthService"]
-        UserSvc["UserService"]
-        EmailSvc["EmailService"]
-        PaymentSvc["PaymentService"]
-    end
-
-    subgraph Repos["Data Layer"]
-        UserRepo["UserRepository"]
-        TokenRepo["TokenRepository"]
-    end
-
-    subgraph Ext["External APIs"]
-        SendGrid["SendGrid"]
-        Stripe["Stripe"]
-    end
-
-    POST -->|Validates| AuthSvc
-    AuthSvc -->|Creates user| UserSvc
-    UserSvc -->|Saves| UserRepo
-    AuthSvc -->|Generates token| TokenRepo
-    UserSvc -->|Sends email| EmailSvc
-    EmailSvc -->|HTTP| SendGrid
-    UserSvc -->|Processes payment| PaymentSvc
-    PaymentSvc -->|HTTP| Stripe
-```
-
----
-
-## Best Practices
-
-1. **Start at Level 1:** Always begin with context. Don't assume readers know the system.
-2. **One diagram per level:** Each level should be a separate diagram for clarity.
-3. **Technology in containers:** Specify which tech is used (React, PostgreSQL, etc.).
-4. **Data flow arrows:** Label arrows with data type or protocol (REST, SQL, gRPC).
-5. **Consistency:** Use same shape/color for similar component types.
-6. **Simplify:** Don't include every internal function; keep components at service/module level.
-7. **Audience:** C1 for executives, C2 for team leads, C3-C4 for engineers.
-
----
-
-## Mermaid Tips
-
-**Node Types:**
-
-```mermaid
-graph TB
-    A["Rectangle"]
-    B["(Rounded)"]
-    C["[Square]"]
-    D["Diamond"]
-    E["Hexagon"]
-```
-
-**Styling:**
-
-```mermaid
-graph TB
-    A["API Server"]:::api
-    B["Database"]:::db
-    C["Frontend"]:::frontend
-
-    A -->|Query| B
-
-    classDef api fill:#4A90E2,stroke:#000,color:#fff
-    classDef db fill:#F5A623,stroke:#000,color:#fff
-    classDef frontend fill:#7ED321,stroke:#000,color:#fff
-```
-
-**Subgraph (Grouping):**
-
-```mermaid
-graph TB
-    subgraph Backend["Backend Layer"]
-        API["API Server"]
-        Worker["Background Worker"]
-    end
-
-    subgraph Database["Data Layer"]
-        DB["PostgreSQL"]
-    end
-
-    API -->|Query| DB
-    API -->|Task| Worker
-```
-
----
-
-## C4 Architecture Document Template
-
-```markdown
-# C4 Architecture: [System Name]
-
-## Level 1: System Context
-
-[Mermaid diagram or description]
-
-**What it shows:**
-
-- [System user groups]
-- [External integrations]
-- [High-level flows]
-
-**Key decision:**
-
-- [Tech choice or architectural decision]
-
----
-
-## Level 2: Container Architecture
-
-[Mermaid diagram]
-
-**Containers:**
-
-1. [Container Name] — [Tech stack] — [Purpose]
-2. [Container Name] — [Tech stack] — [Purpose]
-
-**Communication:**
-
-- Frontend → Backend: REST/GraphQL over HTTPS
-- Backend → Database: SQL over encrypted connection
-
----
-
-## Level 3: Component (Backend Example)
-
-[Mermaid diagram]
-
-**Services:**
-
-- [Service Name]: [Responsibility]
-- [Service Name]: [Responsibility]
-
-**Data Flow:**
-[Description of how data flows through services]
-
----
-
-## Architecture Decisions
-
-| Decision                  | Rationale                                 | Alternatives                 | Trade-offs                       |
-| ------------------------- | ----------------------------------------- | ---------------------------- | -------------------------------- |
-| PostgreSQL for primary DB | ACID compliance, complex queries          | MongoDB, DynamoDB            | Less flexible schema changes     |
-| Redis for sessions        | Fast in-memory, supports expiration       | Database, Memcached          | Requires separate infrastructure |
-| Vercel Serverless         | Automatic scaling, managed infrastructure | Docker on EC2, GCP Cloud Run | Vendor lock-in, cold starts      |
-
----
-
-## Deployment Topology
-
-[Show how components map to infrastructure: Vercel, RDS, ElastiCache, etc.]
-
----
-
-## Scalability & Performance
-
-- Frontend: CDN caching, automatic scaling
-- Backend: Vercel auto-scaling, connection pooling
-- Database: Read replicas, caching layer
-
----
+- Microservices with 10+ containers: split into multiple diagrams (one per domain boundary); don't try to show all containers in one diagram.
+- Existing system being documented: discover containers by reading the codebase and infrastructure config before drawing.
+- Third-party SaaS in the diagram: show at boundary level only; don't detail their internals.
+- Code level (L4): only generate if the team explicitly needs a class diagram; usually the IDE generates this better.
 
 ## References
 
-- [C4 Model Official](https://c4model.com/)
-- [Mermaid Docs](https://mermaid.js.org/)
-- [Architecture Decision Records (ADRs)](https://adr.github.io/)
-```
-
----
-
-## References
-
-- [C4 Model by Simon Brown](https://c4model.com/)
-- [Mermaid.js Documentation](https://mermaid.js.org/)
-- [Architecture Decision Records (ADRs)](https://adr.github.io/)
-- [System Design Handbook](https://www.systemdesignhandbook.com/)
+See [`references/REFERENCE.md`](references/REFERENCE.md) for C4 notation rules, Mermaid syntax tips, and the C4 model specification.

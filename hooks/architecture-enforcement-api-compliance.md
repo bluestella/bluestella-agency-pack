@@ -1,6 +1,8 @@
 ---
-title: Hook — Architecture to Integration Architect (API Design)
-description: Trigger for when Integration Architect receives APIs that don't match architecture spec
+trigger: api-contract-violation
+from: Integration Architect
+to: Microservices Engineer
+severity: high
 ---
 
 # Hook: Architecture Enforcement — API Compliance Check

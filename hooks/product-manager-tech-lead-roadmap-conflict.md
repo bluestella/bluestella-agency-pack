@@ -1,6 +1,8 @@
 ---
-title: Hook — Product Manager to Tech Lead (Roadmap Conflict)
-description: Trigger for when Product Manager's roadmap conflicts with Tech Lead's technical priorities
+trigger: roadmap-technical-conflict
+from: Product Manager
+to: Tech Lead
+severity: medium
 ---
 
 # Hook: Product Manager ↔ Tech Lead (Roadmap Alignment)

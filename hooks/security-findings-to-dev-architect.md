@@ -1,6 +1,8 @@
 ---
-title: Hook — Security Findings to Developer/Architect
-description: Trigger for when Security Engineer finds STRIDE threats during design or implementation validation
+trigger: stride-threat-finding
+from: Security Engineer
+to: Developer
+severity: critical
 ---
 
 # Hook: Security Findings → Developer/Architect

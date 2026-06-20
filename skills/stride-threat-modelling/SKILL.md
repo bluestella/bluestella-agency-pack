@@ -1,205 +1,76 @@
 ---
 name: stride-threat-modelling
-description: Generates STRIDE threat models for architecture components, identifying Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege threats. Documents each threat with severity, impact, and mitigation strategies. WHEN: Threat modelling a component, security design review, identifying security requirements, assessing attack surface, designing incident response.
+description: >
+  Generates STRIDE threat models for architecture components, identifying Spoofing, Tampering,
+  Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege threats.
+  Documents each threat with likelihood, impact, severity, and mitigation strategies.
+  Use when threat modelling a component, conducting security design reviews, identifying
+  security requirements, assessing attack surface, or designing incident response.
+metadata:
+  author: bluestella
+  version: "1.0"
 ---
 
-# STRIDE Threat Modelling Skill
+# STRIDE Threat Modelling
 
 ## Overview
 
-STRIDE is a systematic threat modelling methodology that categorizes security threats into six categories. This skill helps Security Architects and Security Engineers identify threats in system components and define mitigation strategies.
+STRIDE is a systematic threat modelling methodology that categorizes threats into six categories. This skill helps Security Architects and Security Engineers identify threats in system components and define mitigations — producing a threat register that feeds directly into security requirements and acceptance criteria.
 
-## STRIDE Categories
+## STRIDE Categories (Quick Reference)
 
-| Category                   | Description                               | Examples                                            |
-| -------------------------- | ----------------------------------------- | --------------------------------------------------- |
-| **S**poofing               | Identity/authentication bypass            | Fake login, session hijacking, API key theft        |
-| **T**ampering              | Data modification (in transit or at rest) | DB poisoning, network interception, config changes  |
-| **R**epudiation            | Denying actions without audit trail       | User claims they didn't make transaction, no logs   |
-| **I**nformation Disclosure | Leaking sensitive data                    | PII exposure, API keys in logs, unencrypted storage |
-| **D**enial of Service      | Service unavailability                    | Rate limit bypass, resource exhaustion, crashes     |
-| **E**levation of Privilege | Gaining unauthorized access               | SQL injection → admin access, privilege escalation  |
+| Letter | Threat                  | Description                              |
+| ------ | ----------------------- | ---------------------------------------- |
+| S      | Spoofing                | Impersonating a user, service, or system |
+| T      | Tampering               | Modifying data in transit or at rest     |
+| R      | Repudiation             | Denying actions without audit evidence   |
+| I      | Information Disclosure  | Exposing data to unauthorized parties   |
+| D      | Denial of Service       | Making a service unavailable             |
+| E      | Elevation of Privilege  | Gaining unauthorized access/permissions  |
 
----
+## Steps
 
-## Threat Modelling Workflow
+1. **List components.** Enumerate all system components in scope: frontend, backend API, database, auth service, queues, external integrations.
+2. **Draw the data flow diagram.** Show how data moves between components. Mark entry points, trust boundaries, and data stores. Use the Mermaid template in [`templates/stride-template.md`](templates/stride-template.md).
+3. **Brainstorm threats per STRIDE category.** For each component × each STRIDE letter, ask: "How could this be attacked?" Generate a list of candidate threats.
+4. **Score each threat.** Estimate Likelihood (High/Medium/Low) and Impact (Critical/High/Medium/Low). Derive Overall Severity using the matrix in [`references/REFERENCE.md`](references/REFERENCE.md).
+5. **Define mitigations.** For each threat: Prevention (stop it), Detection (catch it), Response (limit damage). Mark each mitigation as Implemented, Planned, or Accepted Risk.
+6. **Build the risk register.** Prioritize Critical and High severity threats as mandatory mitigations. Flag Accepted Risks for explicit sign-off.
+7. **Get sign-off.** Security Architect + Tech Lead. Critical risks require CTO-level acknowledgment if accepted.
 
-### Step 1: Identify Components
+## Output Format
 
-List all major system components:
+A markdown threat model document:
 
-- Web frontend (React)
-- Backend API (Vercel Serverless)
-- Database (PostgreSQL)
-- Authentication service (OAuth 2.0)
-- Payment processor (Stripe)
-- Email service (SendGrid)
-- etc.
-
-### Step 2: Draw Data Flow Diagram
-
-Show how data flows between components. Include:
-
-- Entry points (where external users interact)
-- Trust boundaries (where data crosses security domains)
-- Data stores (where data is stored)
-
-### Step 3: Brainstorm Threats per Category
-
-For each component, identify possible threats:
-
-**Spoofing Threats:**
-
-- Attacker impersonates legitimate user
-- Attacker forges authentication token
-- Man-in-the-middle pretends to be API
-
-**Tampering Threats:**
-
-- Attacker modifies API request in transit
-- Attacker modifies database record directly
-- Attacker changes payment amount before submission
-
-**Information Disclosure Threats:**
-
-- PII logged in plain text
-- Database credentials in source code
-- API keys leaked in error messages
-- Sensitive data stored unencrypted
-
-**Denial of Service Threats:**
-
-- API rate limit not enforced → 1,000 req/sec possible
-- Large file upload without size limits → disk full
-- Expensive database queries without timeout
-
-**Elevation of Privilege Threats:**
-
-- SQLi in login form → direct DB access
-- Unvalidated user ID parameter → access other users' data
-- No RBAC checks on admin endpoints
-
-**Repudiation Threats:**
-
-- No audit log of financial transactions
-- User can delete activity history
-- No logs of who changed permissions
-
-### Step 4: Assess Severity
-
-For each threat, estimate:
-
-- **Likelihood:** High / Medium / Low (How easy is the attack?)
-- **Impact:** Critical / High / Medium / Low (How bad if it succeeds?)
-- **Overall Severity = Likelihood × Impact**
-
-| Likelihood \ Impact | Critical | High   | Medium | Low    |
-| ------------------- | -------- | ------ | ------ | ------ |
-| High                | Critical | High   | High   | Medium |
-| Medium              | High     | High   | Medium | Medium |
-| Low                 | High     | Medium | Medium | Low    |
-
-### Step 5: Document Mitigations
-
-For each threat, define:
-
-1. **Prevention:** Stop the attack before it happens
-2. **Detection:** Detect the attack when it occurs
-3. **Response:** Mitigate damage after attack
-
-**Example:**
-
-| Threat                        | Severity | Prevention                                            | Detection                             | Response                  |
-| ----------------------------- | -------- | ----------------------------------------------------- | ------------------------------------- | ------------------------- |
-| SQL Injection in login        | Critical | Parameterized queries, input validation               | Query logging, WAF rules              | Incident response plan    |
-| Unencrypted passwords in logs | Critical | Log redaction filter, never log passwords             | Audit log access, SIEM alerts         | Rotate user passwords     |
-| API rate limit bypass         | High     | Strict rate limiting per IP/user, exponential backoff | CloudWatch metrics, Datadog dashboard | Circuit breaker, block IP |
-
----
-
-## STRIDE Threat Model Template
-
-```markdown
+```
 # STRIDE Threat Model: [System Name]
-
 ## Components
-
-1. [Component A] — [Brief description]
-2. [Component B] — [Brief description]
-   ...
-
-## Data Flow Diagram
-
-[Mermaid diagram or ASCII art showing components and data flows]
-
----
-
-## Threats by Category
-
-### Spoofing
-
-| ID  | Threat                                    | Component | Likelihood | Impact   | Severity | Mitigation                                        |
-| --- | ----------------------------------------- | --------- | ---------- | -------- | -------- | ------------------------------------------------- |
-| S1  | Attacker impersonates user via stolen JWT | API       | Medium     | High     | High     | JWT expiration (1hr), refresh token rotation, MFA |
-| S2  | Database credentials in source code       | Backend   | Low        | Critical | High     | Use Secrets Manager, scan for creds in CI         |
-
-### Tampering
-
-[Repeat above structure]
-
-### Repudiation
-
-[Repeat above structure]
-
-### Information Disclosure
-
-[Repeat above structure]
-
-### Denial of Service
-
-[Repeat above structure]
-
-### Elevation of Privilege
-
-[Repeat above structure]
-
----
-
-## Risk Register
-
-**Critical Risks (Must Mitigate):**
-
-- [Threat ID]: [Description] → Mitigation: [Action]
-- [Threat ID]: [Description] → Mitigation: [Action]
-
-**High Risks (Should Mitigate):**
-
-- [Threat ID]: [Description] → Mitigation: [Action]
-
-**Medium Risks (Monitor):**
-
-- [Threat ID]: [Description] → Mitigation: [Action]
-
----
-
+## Data Flow Diagram    — Mermaid diagram
+## Threats by Category  — table per STRIDE letter: ID, threat, component,
+                          likelihood, impact, severity, mitigation
+## Risk Register        — Critical/High sorted by severity
 ## Sign-Off
-
-- [ ] Security Architect: ****\_\_**** Date: **\_\_**
-- [ ] Tech Lead: ****\_\_**** Date: **\_\_**
-- [ ] Stakeholder: ****\_\_**** Date: **\_\_**
 ```
 
----
+Template: [`templates/stride-template.md`](templates/stride-template.md)
 
-## Tools
+## Examples
 
-- **OWASP Threat Dragon:** Free, visual threat modelling tool (https://www.threatdragon.org/)
-- **Microsoft Threat Modeling Tool:** Free, from Microsoft (now open-source)
-- **Draw.io / Miro:** Free diagramming tools
+**Input:** "Threat model the authentication service (JWT-based login, PostgreSQL user table)."
+
+**Output:** Threat model covering S (JWT forgery, session hijacking), T (DB record tampering), R (no transaction log), I (PII in error messages, JWT payload readable), D (rate limit bypass on /login), E (SQLi in email field → admin access). 12 threats total, 4 Critical, 5 High, 3 Medium.
+
+**Input:** "Security found a new threat — rate limiting not enforced on signup. What's the STRIDE category?"
+
+**Output:** Denial of Service (D) threat. Likelihood: High. Impact: High. Mitigation: implement rate limiting at 5 req/IP/minute on POST /auth/signup. Feeds back to Business Analyst as new security requirement.
+
+## Edge Cases
+
+- Large system (20+ components): scope the model to one component at a time. Don't try to model the entire system in one session.
+- External third-party components (Stripe, SendGrid): model the trust boundary — what data crosses it, what could go wrong — not the internals of the third party.
+- STRIDE finding requires a new business requirement: trigger the `security-finding-to-ba-requirement` hook to route the finding to the Business Analyst.
+- Accepted Risk: always document who accepted it and why — never leave a Critical threat with no mitigation silently.
 
 ## References
 
-- [STRIDE on Wikipedia](<https://en.wikipedia.org/wiki/Stride_(security)>)
-- [OWASP Threat Modeling](https://owasp.org/www-community/Threat_Modeling)
-- [Microsoft: Threat Modeling](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats)
-- [NIST: Threat Modeling](https://csrc.nist.gov/projects/threat-modeling/)
+See [`references/REFERENCE.md`](references/REFERENCE.md) for the severity matrix, DREAD scoring, and external STRIDE resources.

@@ -1,6 +1,8 @@
 ---
-title: Hook — Deployment Failure to Tech Lead
-description: Trigger for when DevOps detects deployment failure during CI/CD pipeline
+trigger: deployment-failure
+from: DevOps / Platform Engineer
+to: Tech Lead
+severity: critical
 ---
 
 # Hook: DevOps Deployment Failure → Tech Lead

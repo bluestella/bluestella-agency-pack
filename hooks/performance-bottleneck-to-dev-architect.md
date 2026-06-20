@@ -1,6 +1,8 @@
 ---
-title: Hook — Performance Bottleneck to Developer/Architect
-description: Trigger for when Performance Testing Engineer finds SLA breaches or bottlenecks
+trigger: performance-sla-breach
+from: Performance Testing Engineer
+to: Developer
+severity: high
 ---
 
 # Hook: Performance Bottleneck → Developer/Architect

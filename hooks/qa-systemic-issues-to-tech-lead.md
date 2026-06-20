@@ -1,6 +1,8 @@
 ---
-title: Hook — QA Systemic Issues to Tech Lead
-description: Trigger for when QA finds repeated failures indicating systemic code quality issues
+trigger: qa-systemic-failure
+from: Automation Testing Engineer
+to: Tech Lead
+severity: high
 ---
 
 # Hook: QA Systemic Issues → Tech Lead (Code Quality)

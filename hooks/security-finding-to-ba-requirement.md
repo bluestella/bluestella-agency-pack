@@ -1,6 +1,8 @@
 ---
-title: Hook — STRIDE Finding to Requirement Change
-description: Trigger for when Security Engineer finds STRIDE threat that requires new business requirement
+trigger: stride-finding-requires-requirement
+from: Security Engineer
+to: Business Analyst
+severity: high
 ---
 
 # Hook: Security Finding → Business Analyst (Requirement Change)

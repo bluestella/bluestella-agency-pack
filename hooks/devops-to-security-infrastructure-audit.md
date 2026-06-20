@@ -1,6 +1,8 @@
 ---
-title: Hook — DevOps to Security (Infrastructure Audit)
-description: Trigger for when DevOps detects security misconfiguration in infrastructure
+trigger: infrastructure-security-misconfiguration
+from: DevOps / Platform Engineer
+to: Security Architect
+severity: high
 ---
 
 # Hook: DevOps → Security Architect (Infrastructure Audit)

@@ -1,6 +1,8 @@
 ---
-title: Hook — QA Test Findings to Developer
-description: Trigger for when Automation Testing Engineer finds code bugs during visual or API testing
+trigger: qa-test-failure
+from: Automation Testing Engineer
+to: Developer
+severity: medium
 ---
 
 # Hook: QA Test Findings → Developer

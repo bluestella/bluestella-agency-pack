@@ -1,0 +1,218 @@
+openapi: 3.0.3
+
+info:
+  title: "[Product Name] API"
+  description: "REST API for [product description]"
+  version: "1.0.0"
+  contact:
+    name: "API Support"
+    email: "api-support@example.com"
+
+servers:
+  - url: "https://api.example.com/v1"
+    description: "Production"
+  - url: "https://staging-api.example.com/v1"
+    description: "Staging"
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: "http"
+      scheme: "bearer"
+      bearerFormat: "JWT"
+      description: "JWT access token (1-hour expiry)"
+    ApiKeyAuth:
+      type: "apiKey"
+      in: "header"
+      name: "X-API-Key"
+      description: "API key for service-to-service calls"
+
+  schemas:
+    # ─── Standard response wrappers ───────────────────────────────────────
+    SuccessResponse:
+      type: object
+      required: [success, data, meta]
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          description: "Response payload — varies by endpoint"
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    ErrorResponse:
+      type: object
+      required: [success, error, meta]
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              enum:
+                - VALIDATION_ERROR
+                - NOT_FOUND
+                - CONFLICT
+                - UNAUTHORIZED
+                - FORBIDDEN
+                - RATE_LIMITED
+                - INTERNAL_ERROR
+            message:
+              type: string
+              example: "Invalid email format"
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    ResponseMeta:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        request_id:
+          type: string
+
+    # ─── Domain models ─────────────────────────────────────────────────────
+    # Add your domain models here (User, Subscription, etc.)
+    # Example:
+    User:
+      type: object
+      required: [id, email, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [admin, member, viewer]
+        createdAt:
+          type: string
+          format: date-time
+
+  # ─── Reusable responses ─────────────────────────────────────────────────
+  responses:
+    Unauthorized:
+      description: "Missing or invalid authentication token"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Forbidden:
+      description: "Authenticated but insufficient permissions"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: "Resource not found"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    RateLimited:
+      description: "Too many requests"
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: "Seconds to wait before retrying"
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InternalError:
+      description: "Unexpected server error"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+# ─── Paths ─────────────────────────────────────────────────────────────────
+paths:
+  # Example endpoint — replace with your own
+  /auth/signup:
+    post:
+      tags: [Authentication]
+      summary: "Create a new user account"
+      description: "Register with email and password. Sends a verification email on success."
+      security: []  # Public endpoint — no auth required
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                password:
+                  type: string
+                  minLength: 8
+                  example: "SecurePass123"
+      responses:
+        "201":
+          description: "Account created — verification email sent"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/User"
+        "400":
+          description: "Validation error (invalid email, weak password)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Email already registered"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  # Add more paths here
+  # /auth/login:
+  # /users/{id}:
+  # /subscriptions:

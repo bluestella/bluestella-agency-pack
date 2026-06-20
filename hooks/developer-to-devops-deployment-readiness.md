@@ -1,6 +1,8 @@
 ---
-title: Hook — Developer to DevOps (Deployment Readiness)
-description: Trigger for when Developer signals feature is ready for DevOps deployment
+trigger: deployment-readiness-signal
+from: Developer
+to: DevOps / Platform Engineer
+severity: medium
 ---
 
 # Hook: Developer → DevOps (Deployment Readiness Check)

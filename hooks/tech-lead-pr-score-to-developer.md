@@ -1,6 +1,8 @@
 ---
-title: Hook — Tech Lead PR Score Below Threshold
-description: Trigger for when Tech Lead scores a PR below the quality gate threshold
+trigger: pr-score-below-threshold
+from: Tech Lead
+to: Developer
+severity: medium
 ---
 
 # Hook: Tech Lead PR Review → Developer

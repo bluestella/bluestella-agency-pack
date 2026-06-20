@@ -1,6 +1,8 @@
 ---
-title: Hook — Tech Lead to Architecture Team (Technical Debt)
-description: Trigger for when Tech Lead identifies technical debt requiring architectural review
+trigger: technical-debt-architectural-review
+from: Tech Lead
+to: Solution Architect
+severity: medium
 ---
 
 # Hook: Tech Lead ↔ Architecture Team — Technical Debt & Alignment
