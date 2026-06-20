@@ -9,7 +9,7 @@ Test naming and structure:
 
 Coverage and quality:
 
-- Maintain minimum coverage: 80%
+- Maintain minimum coverage: 90% (statements, lines, branches, functions)
 - MOCK all external dependencies; no real network or DB calls in unit tests
 
 Bug-fix protocol:
