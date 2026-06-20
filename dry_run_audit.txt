@@ -1,0 +1,45 @@
+AI AGENCY SIMULATION DRY-RUN AUDIT REPORT
+========================================
+Version: 1.0.0
+Date: 2026-06-20
+
+PART 1: STEPS TO START THE AI AGENCY
+------------------------------------
+1. Initiative Trigger: Human Stakeholder provides the initial Product Brief / Goal to the Product Manager (PM).
+2. Product Goal Alignment: PM defines the Product Roadmap and creates the high-level Epic.
+3. Requirements Authoring: Business Analyst (BA) runs the BRD skill to create a full Business Requirements Document (BRD) with Epic -> User Story -> Task -> Sub-task hierarchy.
+4. Solution Blueprinting: Solution Architect (SA) leads the Architecture Team (Integration, Data, Security) to design system boundaries, schemas, API contracts, and C4 diagrams.
+5. Task Breakdown & Routing: Tech Lead (TL) reviews the blueprint and routes tasks to Frontend (React/React Native/SEO/A11y) and Backend (Microservices) Engineers.
+6. Engineering Implementation: Developers write code and local tests (Vitest).
+7. Quality Gate Scoring: Tech Lead reviews and scores the PRs against 7 Quality Gates (Unit tests >=90%, type safety, linting, SonarCloud, CVEs, bug check, no debug symbols).
+8. QA Validation: Quality Team (Automation, Performance, Security) runs visual, API, load, and STRIDE threat modeling audits.
+9. Platform Deployment: DevOps/Platform Engineer deploys the code via CI/CD pipelines to preview/staging/production.
+
+PART 2: INPUTS FOR THE PRODUCT MANAGER (PM)
+-------------------------------------------
+To begin the process, the PM requires:
+- High-level business objective (e.g., "Implement a Multi-Tenant SaaS Billing Dashboard").
+- Primary Target Audience and User Personas (e.g., "Analytics Managers, Account Admins").
+- Business Constraints (Timeline, budget, compliance requirements like SOC2).
+- Key Success Metrics/KPIs (e.g., "Page loads < 2s, support volume reduction by 20%").
+- Product context / Competitive references.
+
+PART 3: DRY-RUN CHECK OF WORKFLOW, HOOKS, AGENTS, & SKILLS
+----------------------------------------------------------
+We analyzed the workspace structure and identified the following checklist for validation:
+
+1. Technical Lead Bottleneck (Severity: Medium)
+   - Audit Check: The Tech Lead is responsible for routing all tasks and scoring all PRs.
+   - Mitigator: Standardized Quality Gates can be automated in CI (eslint, tsc, vitest --coverage, security scans) to reduce Tech Lead manual review load.
+
+2. Hook Execution Strategy (Severity: High)
+   - Audit Check: Hooks (e.g., "deployment-failure-to-tech-lead.md", "qa-test-findings-to-developer.md") are documented.
+   - Missing Piece: We need to determine how these hooks are technically triggered (e.g., GitHub Actions, Webhooks, or CLI parser).
+
+3. Feedback Loop Routing (Severity: Low)
+   - Audit Check: When DevOps deployment fails, it notifies the Tech Lead.
+   - Recommendation: Add a secondary route to directly alert the developer who committed the code to minimize time-to-fix.
+
+4. Skill Completeness (Severity: Medium)
+   - Audit Check: Skills are structured as directories, but many templates under "skills/templates/" or "skills/references/" are planned or stubbed.
+   - Recommendation: Ensure templates are populated before initiating the first agency run.
