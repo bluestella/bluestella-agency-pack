@@ -17,10 +17,13 @@ The project separates the **authoring workspace** (root folders) from the **IDE 
 ```
 bluestella-agency-pack/
 ├── AGENTS.md                          # AI tool entry point (root source of truth)
-├── INIT.md                            # Reference links for writing agents, skills, and hooks
-├── PLANS.md                           # Master implementation plan & workflows
-├── PLANS_Working Document.md          # Working draft of PLANS.md (do not use as authoritative)
-├── concept.excalidraw                 # Architecture concept diagram
+├── CONTRIBUTING.md                    # Authoring guide: versioning, metrics, learning loop, PR conventions
+├── LEARNINGS.md                       # Accumulated authoring learnings; updated by learning-loop-update hook
+├── METRICS.md                         # Quality scoreboard for all agents, skills, hooks, instructions
+├── INIT.md                            # Reference links for writing good agents, skills, and hooks
+├── PLANS.md                           # Master implementation plan: agent roster, workflow, skills, artifacts
+├── PLANS_Working Document.md          # Working draft of PLANS.md (do not treat as authoritative)
+├── concept.excalidraw                 # Architecture concept diagram (visual only, do not edit via AI)
 ├── workspace-sync.sh                  # CLI utility to mirror configs into IDE workspaces
 │
 ├── agents/                            # Agent Role Cards (Role & Overview · Responsibilities · Tools · DoD)
@@ -30,14 +33,14 @@ bluestella-agency-pack/
 │   ├── frontend/                      # React, React Native, SEO, and A11y Engineers
 │   ├── backend/                       # Microservices / Serverless Engineer
 │   ├── quality/                       # Automation Testing, Performance, and Security Engineers
-│   └── devops/                        # DevOps / Platform Engineer
+│   ├── devops/                        # DevOps / Platform Engineer
+│   └── tools/                         # Agency Pack Author (Meta-agent)
 │
 ├── instructions/                      # Step-by-step procedural guides for recurring tasks
 ├── hooks/                             # Hand-off trigger conditions and agent feedback loops
 ├── skills/                            # Reusable prompt skills following agentskills.io spec
-│   ├── README.md                      # Skill authoring instructions
-│   └── templates/                     # Document templates (BRD, ADR, test plans, bug reports, etc.)
-│
+│   └── README.md                      # Skill authoring guide and folder contract
+├── templates/                         # Cross-cutting scaffold templates (source of truth; .github/ is mirror)
 ├── docs/                              # Standard guidelines and AI generation rules
 └── .github/                           # ⚠️ GitHub AI runtime (Managed by sync script, READ-ONLY)
 ```
@@ -66,12 +69,13 @@ Each agent has a dedicated **Role Card** located under the [agents/](agents) dir
 | **Quality** | **Performance Testing Engineer** | [performance-testing-engineer.md](agents/quality/performance-testing-engineer.md) |
 | **Quality** | **Security Engineer** | [security-engineer.md](agents/quality/security-engineer.md) |
 | **DevOps** | **DevOps / Platform Engineer** | [devops-engineer.md](agents/devops/devops-engineer.md) |
+| **Tools** | **Agency Pack Author** | [agency-pack-author.md](agents/tools/agency-pack-author.md) |
 
 ---
 
 ## 🔄 Agent Workflow & Feedback Loop
 
-The team operates along a top-down delivery pipeline. Requirements flows from Business Analyst down to Architecture, and Tech Lead assigns corresponding frontend/backend development. Once code is submitted, the Quality team validates results, and DevOps deploys. 
+The team operates along a top-down delivery pipeline. Requirements flow from the Business Analyst down to Architecture, and the Tech Lead assigns corresponding frontend/backend development. Once code is submitted, the Quality team validates results, and DevOps deploys. 
 
 When issues are discovered at any stage, hand-off trigger conditions return the issue upstream to resolve gaps.
 
@@ -129,6 +133,8 @@ The trigger relationships are managed via files in the [hooks/](hooks) directory
 - [deployment-failure-to-tech-lead.md](hooks/deployment-failure-to-tech-lead.md)
 - [developer-to-devops-deployment-readiness.md](hooks/developer-to-devops-deployment-readiness.md)
 - [devops-to-security-infrastructure-audit.md](hooks/devops-to-security-infrastructure-audit.md)
+- [learning-loop-update.md](hooks/learning-loop-update.md)
+- [low-score-flag.md](hooks/low-score-flag.md)
 - [performance-bottleneck-to-dev-architect.md](hooks/performance-bottleneck-to-dev-architect.md)
 - [product-manager-tech-lead-roadmap-conflict.md](hooks/product-manager-tech-lead-roadmap-conflict.md)
 - [qa-systemic-issues-to-tech-lead.md](hooks/qa-systemic-issues-to-tech-lead.md)
@@ -137,6 +143,8 @@ The trigger relationships are managed via files in the [hooks/](hooks) directory
 - [security-findings-to-dev-architect.md](hooks/security-findings-to-dev-architect.md)
 - [tech-lead-pr-score-to-developer.md](hooks/tech-lead-pr-score-to-developer.md)
 - [tech-lead-to-architecture-technical-debt.md](hooks/tech-lead-to-architecture-technical-debt.md)
+- [version-bump.md](hooks/version-bump.md)
+
 
 ---
 
