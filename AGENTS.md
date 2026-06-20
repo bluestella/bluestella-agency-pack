@@ -3,12 +3,17 @@ title: AGENTS.md — AI Tool Entry Point
 description: First file AI tools should read before acting on this repository.
 author: bluestella
 date: 2026-06-20
-version: 1.0.0
+version: 1.1.0
 ---
 
 # AGENTS.md
 
 > **AI tools: read this file first.** It describes what this repository is, how it is structured, which agent roles exist, how work flows between them, and what you must never touch. Subdirectory `AGENTS.override.md` files take precedence over this file for their directory.
+
+> [!CAUTION]
+> **Do NOT modify `.github/` in any way.** That folder is a GitHub AI runtime container managed exclusively by a sync script. All authoring happens in the root workspace folders (`agents/`, `instructions/`, `hooks/`, `skills/`, `docs/`).
+>
+> **Do NOT create, rename, or delete agent files** unless the human has explicitly asked you to do so in the current session. The agent roster is intentional and version-controlled.
 
 ---
 
@@ -16,7 +21,7 @@ version: 1.0.0
 
 `bluestella-agency-pack` is a structured collection of AI agent role cards, skills, instructions, hooks, and templates that define a full software-delivery team. The agents span product management, business analysis, architecture, frontend, backend, quality, and DevOps. Each agent has a documented role card, a responsibilities list, a tool stack, and a Definition of Done.
 
-The root folders (`agents/`, `instructions/`, `hooks/`, `skills/`, `docs/`) are the source-of-truth workspace. The `.github/` and `.vscode/` folders are the runtime containers — a Python script will move and synchronise files from the root structure into them.
+The root folders (`agents/`, `instructions/`, `hooks/`, `skills/`, `docs/`) are the **source-of-truth workspace** — all authoring and editing happens here. `.github/` is the **GitHub AI runtime container**: it is read-only from an AI tool's perspective and is populated exclusively by a Python sync script that mirrors files from the root structure. `.vscode/` holds workspace editor settings.
 
 ---
 
@@ -78,9 +83,9 @@ bluestella-agency-pack/
 │   ├── AI IDE Generation Standards including VSCode.md   # Standards for AI-assisted code generation in IDEs
 │   └── AI_IDE_Generation_Templates.md                   # Templates used by AI IDE generation workflows
 │
-├── .github/                           # GitHub + AI tool runtime configuration
-│   │                                  # Populated by the root-to-.github sync script
-│   ├── AGENTS.md                      # Pointer → root AGENTS.md (do not edit here; edit root)
+├── .github/                           # ⚠ GitHub AI runtime — READ ONLY for AI tools
+│   │                                  # Managed by the root-to-.github sync script. DO NOT edit directly.
+│   ├── AGENTS.md                      # Pointer → root AGENTS.md (sync script writes this; never edit here)
 │   ├── copilot-instructions.md        # Copilot default discovery entry point
 │   ├── agents/
 │   │   ├── copilot-agent.md          # Copilot full behavioral spec (identity, stack, workflow, boundaries)
@@ -238,14 +243,21 @@ pnpm build                            # build — must exit 0
 
 ## Hard Boundaries — NEVER Touch
 
+### Repository structure
+
 ```
+.github/**                # GitHub AI runtime — READ ONLY. Managed by sync script. Never create,
+                          # edit, rename, or delete any file here unless explicitly instructed.
 db/migrations/**          # database migration files — never modify
 .env*                     # environment files — never read or modify
 infra/**                  # infrastructure-as-code — never modify
-.github/copilot-instructions.md  # requires explicit human approval to change
 ```
 
-Additional rules:
+### Agent roster
+
+Do not create, rename, or delete agent files under `agents/` unless the human has **explicitly requested it in the current session**. The roster is intentional. If a planned agent is missing, leave it as-is; do not scaffold it speculatively.
+
+### Code rules
 
 - **Never** import a package not in the approved stack without explicit human approval.
 - **Never** commit directly to `main` from automation.
@@ -323,12 +335,12 @@ Skills use the agentskills.io frontmatter schema (see `skills/README.md`).
 
 ### Folder structure contract
 
-- `agents/` — role cards only. No scripts, no templates.
+- `agents/` — role cards only. No scripts, no templates. Do not add files here without explicit instruction.
 - `instructions/` — procedural how-to guides only. One file per task type.
 - `hooks/` — trigger condition definitions only.
 - `skills/` — self-contained skill packages (`SKILL.md` + optional `scripts/`, `references/`, `assets/`).
 - `docs/` — general documentation. Not agent specs.
-- `.github/` — runtime config only. Source of truth lives in root folders; sync script populates `.github/`.
+- `.github/` — **read-only for AI tools.** GitHub AI runtime container. Source of truth lives in root folders; the sync script populates `.github/`. Never write here directly.
 
 ---
 
