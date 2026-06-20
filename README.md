@@ -46,26 +46,26 @@ bluestella-agency-pack/
 
 ## 👥 Agent Roster
 
-Each agent has a dedicated **Role Card** located under the [agents/](file:///Users/bluestella/repositories/bluestella-agency-pack/agents) directory specifying their role overview, responsibilities, tool stack, and Definition of Done (DoD).
+Each agent has a dedicated **Role Card** located under the [agents/](agents) directory specifying their role overview, responsibilities, tool stack, and Definition of Done (DoD).
 
 | Team | Agent Role | Source File |
 | :--- | :--- | :--- |
-| **Management** | **Product Manager** | [product-manager.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/management/product-manager.md) |
-| **Management** | **Tech Lead** (PR Gateway) | [tech-lead.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/management/tech-lead.md) |
-| **Analysis** | **Business Analyst** | [business-analyst.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/analysis/business-analyst.md) |
-| **Architecture** | **Solution Architect** | [solution-architect.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/architecture/solution-architect.md) |
-| **Architecture** | **Integration Architect** | [integration-architect.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/architecture/integration-architect.md) |
-| **Architecture** | **Data Architect** | [data-architect.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/architecture/data-architect.md) |
-| **Architecture** | **Security Architect** | [security-architect.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/architecture/security-architect.md) |
-| **Frontend** | **React Engineer** | [react-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/frontend/react-engineer.md) |
-| **Frontend** | **React Native Engineer** | [react-native-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/frontend/react-native-engineer.md) |
-| **Frontend** | **SEO Engineer** | [seo-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/frontend/seo-engineer.md) |
-| **Frontend** | **A11y Engineer** | [a11y-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/frontend/a11y-engineer.md) |
-| **Backend** | **Microservices Engineer** | [microservices-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/backend/microservices-engineer.md) |
-| **Quality** | **Automation Testing Engineer** | [automation-testing-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/quality/automation-testing-engineer.md) |
-| **Quality** | **Performance Testing Engineer** | [performance-testing-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/quality/performance-testing-engineer.md) |
-| **Quality** | **Security Engineer** | [security-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/quality/security-engineer.md) |
-| **DevOps** | **DevOps / Platform Engineer** | [devops-engineer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/agents/devops/devops-engineer.md) |
+| **Management** | **Product Manager** | [product-manager.md](agents/management/product-manager.md) |
+| **Management** | **Tech Lead** (PR Gateway) | [tech-lead.md](agents/management/tech-lead.md) |
+| **Analysis** | **Business Analyst** | [business-analyst.md](agents/analysis/business-analyst.md) |
+| **Architecture** | **Solution Architect** | [solution-architect.md](agents/architecture/solution-architect.md) |
+| **Architecture** | **Integration Architect** | [integration-architect.md](agents/architecture/integration-architect.md) |
+| **Architecture** | **Data Architect** | [data-architect.md](agents/architecture/data-architect.md) |
+| **Architecture** | **Security Architect** | [security-architect.md](agents/architecture/security-architect.md) |
+| **Frontend** | **React Engineer** | [react-engineer.md](agents/frontend/react-engineer.md) |
+| **Frontend** | **React Native Engineer** | [react-native-engineer.md](agents/frontend/react-native-engineer.md) |
+| **Frontend** | **SEO Engineer** | [seo-engineer.md](agents/frontend/seo-engineer.md) |
+| **Frontend** | **A11y Engineer** | [a11y-engineer.md](agents/frontend/a11y-engineer.md) |
+| **Backend** | **Microservices Engineer** | [microservices-engineer.md](agents/backend/microservices-engineer.md) |
+| **Quality** | **Automation Testing Engineer** | [automation-testing-engineer.md](agents/quality/automation-testing-engineer.md) |
+| **Quality** | **Performance Testing Engineer** | [performance-testing-engineer.md](agents/quality/performance-testing-engineer.md) |
+| **Quality** | **Security Engineer** | [security-engineer.md](agents/quality/security-engineer.md) |
+| **DevOps** | **DevOps / Platform Engineer** | [devops-engineer.md](agents/devops/devops-engineer.md) |
 
 ---
 
@@ -123,26 +123,26 @@ graph TD
 
 ### Hand-off Hooks
 
-The trigger relationships are managed via files in the [hooks/](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks) directory:
+The trigger relationships are managed via files in the [hooks/](hooks) directory:
 
-- [architecture-enforcement-api-compliance.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/architecture-enforcement-api-compliance.md)
-- [deployment-failure-to-tech-lead.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/deployment-failure-to-tech-lead.md)
-- [developer-to-devops-deployment-readiness.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/developer-to-devops-deployment-readiness.md)
-- [devops-to-security-infrastructure-audit.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/devops-to-security-infrastructure-audit.md)
-- [performance-bottleneck-to-dev-architect.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/performance-bottleneck-to-dev-architect.md)
-- [product-manager-tech-lead-roadmap-conflict.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/product-manager-tech-lead-roadmap-conflict.md)
-- [qa-systemic-issues-to-tech-lead.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/qa-systemic-issues-to-tech-lead.md)
-- [qa-test-findings-to-developer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/qa-test-findings-to-developer.md)
-- [security-finding-to-ba-requirement.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/security-finding-to-ba-requirement.md)
-- [security-findings-to-dev-architect.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/security-findings-to-dev-architect.md)
-- [tech-lead-pr-score-to-developer.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/tech-lead-pr-score-to-developer.md)
-- [tech-lead-to-architecture-technical-debt.md](file:///Users/bluestella/repositories/bluestella-agency-pack/hooks/tech-lead-to-architecture-technical-debt.md)
+- [architecture-enforcement-api-compliance.md](hooks/architecture-enforcement-api-compliance.md)
+- [deployment-failure-to-tech-lead.md](hooks/deployment-failure-to-tech-lead.md)
+- [developer-to-devops-deployment-readiness.md](hooks/developer-to-devops-deployment-readiness.md)
+- [devops-to-security-infrastructure-audit.md](hooks/devops-to-security-infrastructure-audit.md)
+- [performance-bottleneck-to-dev-architect.md](hooks/performance-bottleneck-to-dev-architect.md)
+- [product-manager-tech-lead-roadmap-conflict.md](hooks/product-manager-tech-lead-roadmap-conflict.md)
+- [qa-systemic-issues-to-tech-lead.md](hooks/qa-systemic-issues-to-tech-lead.md)
+- [qa-test-findings-to-developer.md](hooks/qa-test-findings-to-developer.md)
+- [security-finding-to-ba-requirement.md](hooks/security-finding-to-ba-requirement.md)
+- [security-findings-to-dev-architect.md](hooks/security-findings-to-dev-architect.md)
+- [tech-lead-pr-score-to-developer.md](hooks/tech-lead-pr-score-to-developer.md)
+- [tech-lead-to-architecture-technical-debt.md](hooks/tech-lead-to-architecture-technical-debt.md)
 
 ---
 
 ## ⚡ Synchronizing the Workspace
 
-To configure an IDE workspace with these roles and rules, use the [workspace-sync.sh](file:///Users/bluestella/repositories/bluestella-agency-pack/workspace-sync.sh) utility. This bash script mirrors rules in `/agents`, `/skills`, `/hooks`, and `/instructions` to IDE specific destinations.
+To configure an IDE workspace with these roles and rules, use the [workspace-sync.sh](workspace-sync.sh) utility. This bash script mirrors rules in `/agents`, `/skills`, `/hooks`, and `/instructions` to IDE specific destinations.
 
 ### Execution
 
@@ -195,7 +195,7 @@ The **Tech Lead** enforces 7 strict quality gates on every Pull Request. A singl
 
 ## ✍️ Development Standards & Contributing
 
-If you want to contribute new agents, skills, hooks, templates, or instructions, please read our detailed [CONTRIBUTING.md](file:///Users/bluestella/repositories/bluestella-agency-pack/CONTRIBUTING.md) guide.
+If you want to contribute new agents, skills, hooks, templates, or instructions, please read our detailed [CONTRIBUTING.md](CONTRIBUTING.md) guide.
 
 The contribution guidelines cover:
 * **Agent Role Cards**: Guidelines on team categories, YAML frontmatter, and Definition of Done structures.
@@ -205,8 +205,8 @@ The contribution guidelines cover:
 * **Templates**: Utilizing boilerplate files under `.github/templates/`.
 
 For guidelines on writing code components and templates:
-* Consult [AI IDE Generation Standards including VSCode.md](file:///Users/bluestella/repositories/bluestella-agency-pack/docs/AI%20IDE%20Generation%20Standards%20including%20VSCode.md) for IDE-assisted generation rules.
-* View [AI_IDE_Generation_Templates.md](file:///Users/bluestella/repositories/bluestella-agency-pack/docs/AI_IDE_Generation_Templates.md) to inspect codebase templating.
+* Consult [AI IDE Generation Standards including VSCode.md](docs/AI%20IDE%20Generation%20Standards%20including%20VSCode.md) for IDE-assisted generation rules.
+* View [AI_IDE_Generation_Templates.md](docs/AI_IDE_Generation_Templates.md) to inspect codebase templating.
 * Ensure all files follow `kebab-case` naming.
 * Include mandatory YAML frontmatter at the head of every documentation or card file.
 
