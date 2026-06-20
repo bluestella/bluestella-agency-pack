@@ -195,8 +195,18 @@ The **Tech Lead** enforces 7 strict quality gates on every Pull Request. A singl
 
 ## ✍️ Development Standards & Contributing
 
-For guidelines on writing components, structures, and documents:
+If you want to contribute new agents, skills, hooks, templates, or instructions, please read our detailed [CONTRIBUTING.md](file:///Users/bluestella/repositories/bluestella-agency-pack/CONTRIBUTING.md) guide.
+
+The contribution guidelines cover:
+* **Agent Role Cards**: Guidelines on team categories, YAML frontmatter, and Definition of Done structures.
+* **Prompt Skills**: Setting up `SKILL.md` configurations under the progressive disclosure model.
+* **Hooks (Feedback Loops)**: Defining trigger conditions, payloads, destination actions, and escalation SLAs.
+* **Scoped Instructions**: Writing directory-specific rules using the `applyTo` glob syntax.
+* **Templates**: Utilizing boilerplate files under `.github/templates/`.
+
+For guidelines on writing code components and templates:
 * Consult [AI IDE Generation Standards including VSCode.md](file:///Users/bluestella/repositories/bluestella-agency-pack/docs/AI%20IDE%20Generation%20Standards%20including%20VSCode.md) for IDE-assisted generation rules.
 * View [AI_IDE_Generation_Templates.md](file:///Users/bluestella/repositories/bluestella-agency-pack/docs/AI_IDE_Generation_Templates.md) to inspect codebase templating.
-* Ensure all files follow kebab-case naming.
+* Ensure all files follow `kebab-case` naming.
 * Include mandatory YAML frontmatter at the head of every documentation or card file.
+
