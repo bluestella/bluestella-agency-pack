@@ -21,7 +21,7 @@ bluestella-agency-pack/
 ├── PLANS.md                           # Master implementation plan & workflows
 ├── PLANS_Working Document.md          # Working draft of PLANS.md (do not use as authoritative)
 ├── concept.excalidraw                 # Architecture concept diagram
-├── workspace-sync.py                  # CLI utility to mirror configs into IDE workspaces
+├── workspace-sync.sh                  # CLI utility to mirror configs into IDE workspaces
 │
 ├── agents/                            # Agent Role Cards (Role & Overview · Responsibilities · Tools · DoD)
 │   ├── management/                    # Product Manager, Tech Lead
@@ -142,18 +142,18 @@ The trigger relationships are managed via files in the [hooks/](file:///Users/bl
 
 ## ⚡ Synchronizing the Workspace
 
-To configure an IDE workspace with these roles and rules, use the [workspace-sync.py](file:///Users/bluestella/repositories/bluestella-agency-pack/workspace-sync.py) utility. This python script mirrors rules in `/agents`, `/skills`, `/hooks`, and `/instructions` to IDE specific destinations.
+To configure an IDE workspace with these roles and rules, use the [workspace-sync.sh](file:///Users/bluestella/repositories/bluestella-agency-pack/workspace-sync.sh) utility. This bash script mirrors rules in `/agents`, `/skills`, `/hooks`, and `/instructions` to IDE specific destinations.
 
 ### Execution
 
 1. **Dry-Run (Default)**: Creates a test layout under `.test/` for inspection before modifying your environment:
    ```bash
-   python3 workspace-sync.py
+   ./workspace-sync.sh
    ```
 
 2. **Apply Changes**: Copies the rules directly to targeted project or global folders:
    ```bash
-   python3 workspace-sync.py --apply
+   ./workspace-sync.sh --apply
    ```
 
 3. **Interactive Configuration**: The script prompts for:

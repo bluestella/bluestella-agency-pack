@@ -171,14 +171,14 @@ Keep template files clear, well-commented, and heavily focused on code conventio
 
 ## ⚙️ 6. Testing & Mirroring Changes
 
-Once modifications are written in the root source directories (`agents/`, `skills/`, `hooks/`, `instructions/`), synchronize them using [workspace-sync.py](file:///Users/bluestella/repositories/bluestella-agency-pack/workspace-sync.py).
+Once modifications are written in the root source directories (`agents/`, `skills/`, `hooks/`, `instructions/`), synchronize them using [workspace-sync.sh](file:///Users/bluestella/repositories/bluestella-agency-pack/workspace-sync.sh).
 
 ```bash
 # 1. Run a Dry-Run and verify output structure under .test/
-python3 workspace-sync.py
+./workspace-sync.sh
 
 # 2. Mirror changes to active project/global IDE config folders
-python3 workspace-sync.py --apply
+./workspace-sync.sh --apply
 ```
 
 ---
@@ -187,7 +187,7 @@ python3 workspace-sync.py --apply
 
 1. **Update the Plan**: If adding a new agent or skill, update [PLANS.md](file:///Users/bluestella/repositories/bluestella-agency-pack/PLANS.md) following the [plans-authoring.instructions.md](file:///Users/bluestella/repositories/bluestella-agency-pack/.github/instructions/plans-authoring.instructions.md) rules.
 2. **Draft the Files**: Create the required Markdown files in the root folders using the appropriate templates.
-3. **Synchronize**: Run `workspace-sync.py` to mirror files locally.
+3. **Synchronize**: Run `workspace-sync.sh` to mirror files locally.
 4. **Pull Request Submission**: Follow the PR title and description conventions specified in the master repository guidelines:
    * Title format: `feat(scope): ...`, `fix(scope): ...`, `docs(scope): ...`
    * Body must include **Summary**, **Motivation**, **Test Plan**, and the standard **Review Checklist**.
