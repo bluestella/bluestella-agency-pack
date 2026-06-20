@@ -114,7 +114,7 @@ resolve_project_root() {
   
   printf "  Enter project config path for %s (relative to CWD) [%s]: " "$name" "$default_val" >&2
   local val
-  read -r val
+  read -r val </dev/tty
   val="$(echo "$val" | xargs)"
   if [[ -z "$val" ]]; then
     val="$default_val"
@@ -130,7 +130,7 @@ resolve_global_root() {
   
   printf "  Enter global config path for %s (absolute or ~) [%s]: " "$name" "$default_val" >&2
   local val
-  read -r val
+  read -r val </dev/tty
   val="$(echo "$val" | xargs)"
   if [[ -z "$val" ]]; then
     val="$default_val"
@@ -170,7 +170,7 @@ confirm() {
   local msg="$1"
   printf "%s (y/n) [n]: " "$msg" >&2
   local ans
-  read -r ans
+  read -r ans </dev/tty
   ans="$(echo "$ans" | tr '[:upper:]' '[:lower:]')"
   if [[ "$ans" == "y" || "$ans" == "yes" ]]; then
     return 0
@@ -230,7 +230,7 @@ interactive_select() {
     printf "  ${C_GREEN}[Enter]${C_RESET} confirm   ${C_RED}[q]${C_RESET} quit\n"
     printf "\n"
     printf "  >> "
-    read -r input
+    read -r input </dev/tty
 
     case "$input" in
       q|Q)
@@ -416,7 +416,7 @@ main() {
   
   printf "Scope [1]: "
   local scope_choice
-  read -r scope_choice
+  read -r scope_choice </dev/tty
   scope_choice="$(echo "$scope_choice" | xargs)"
   if [[ -z "$scope_choice" ]]; then
     scope_choice="1"
