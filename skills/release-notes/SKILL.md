@@ -4,6 +4,13 @@ description: >
   Generates release notes summarizing new features, bug fixes, performance improvements,
   security updates, breaking changes, and migration guidance. Use when publishing a release,
   documenting version updates, communicating changes to users, or maintaining a changelog.
+instructions: []
+agents:
+  - devops-engineer
+  - tech-lead
+  - product-manager
+triggers:
+  - deployment-failure
 metadata:
   author: bluestella
   version: "1.0"

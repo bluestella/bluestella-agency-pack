@@ -6,6 +6,11 @@ description: >
   principles with follow-up accountability tracking. Use when conducting a post-mortem
   after an incident, production outage, security breach, data loss event, critical bug,
   or any incident retrospective.
+instructions: []
+agents:
+  - devops-engineer
+  - tech-lead
+triggers: []
 metadata:
   author: bluestella
   version: "1.0"

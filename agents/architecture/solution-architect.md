@@ -2,6 +2,14 @@
 title: Solution Architect
 team: architecture
 version: 1.0.0
+skills:
+  - solution-architecture
+  - c4-architecture-diagramming
+  - adr
+hooks:
+  emits: []
+  receives:
+    - technical-debt-architectural-review
 ---
 
 # Solution Architect
@@ -134,61 +142,11 @@ The Solution Architect's Definition of Done centers on **architectural completen
 
 ---
 
-## Architecture Documentation Template
+## Output Template
 
-```markdown
-# Solution Architecture: [Project Name]
-
-## Executive Summary
-[2–3 sentences on architectural approach and key benefits]
-
-## Context Diagram (C4 Level 1)
-[Mermaid C4 context diagram]
-
-## Containers (C4 Level 2)
-[Mermaid C4 container diagram]
-Describe each container: Web app, API, database, etc.
-
-## Key Components (C4 Level 3)
-[Mermaid C4 component diagram for critical services]
-
-## Tech Stack
-
-| Layer | Technology | Rationale |
-| ----- | ---------- | --------- |
-| Frontend | React + Next.js | SEO, SSR, strong ecosystem |
-| Backend | Vercel Serverless Functions | Scalability, low ops burden |
-| Database | PostgreSQL | ACID, relational, well-understood |
-| ...
-
-## Trade-Offs & Decisions
-
-| Decision | Chosen | Considered | Rationale |
-| -------- | ------ | ---------- | --------- |
-| Backend runtime | Vercel Functions | AWS Lambda, Google Cloud Run | Vercel ecosystem, TypeScript-first |
-| ...
-
-## Risks & Mitigations
-
-| Risk | Impact | Likelihood | Mitigation |
-| ---- | ------ | ---------- | ---------- |
-| N+1 query performance on complex endpoints | High | Medium | Query optimization, caching layer |
-| ...
-
-## Implementation Roadmap
-- Phase 1 (Sprint 1–2): Infrastructure setup, CI/CD
-- Phase 2 (Sprint 3–5): Core backend API
-- Phase 3 (Sprint 6–8): Frontend development
-- ...
-
-## References & Attachments
-- [Infrastructure diagram](#)
-- [Data flow diagram](#)
-- [Security design](#)
-```
+Use the standard template: [`skills/solution-architecture/templates/solution-architecture-template.md`](../../skills/solution-architecture/templates/solution-architecture-template.md)
 
 ---
-
 ## References
 
 - [C4 Model – Simon Brown](https://c4model.com/)

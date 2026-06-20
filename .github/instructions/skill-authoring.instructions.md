@@ -33,6 +33,12 @@ description: >             # 1–1024 chars; must state WHAT it does AND WHEN to
 Optional fields:
 
 ```yaml
+instructions:
+  - instruction-filename  # instruction files (without .instructions.md) that govern this skill
+agents:
+  - agent-name            # agents that invoke this skill (matches agents/[team]/[agent-name].md)
+triggers:
+  - hook-trigger-name     # hook triggers fired when this skill produces certain outputs
 license: MIT
 compatibility: Requires git and internet access
 metadata:
@@ -40,6 +46,12 @@ metadata:
   version: "1.0"
 allowed-tools: Bash(git:*) Read Write
 ```
+
+`instructions` references the instruction files (without the `.instructions.md` suffix) that contain authoring rules relevant to this skill. Example: `brd-authoring` maps to `instructions/brd-authoring.instructions.md`.
+
+`agents` is the reverse-lookup list of agents that use this skill. Must stay in sync with the `skills:` arrays in those agent role cards.
+
+`triggers` lists hook trigger names (matching the `trigger:` field in hook files under `hooks/`) that this skill's output may fire. Use `[]` when the skill produces no hook-triggering output.
 
 ## description field rules
 

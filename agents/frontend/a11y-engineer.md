@@ -2,6 +2,13 @@
 title: A11y Engineer
 team: frontend
 version: 1.0.0
+skills:
+  - accessibility-audit
+  - test-plan
+  - bug-report
+hooks:
+  emits: []
+  receives: []
 ---
 
 # A11y Engineer
@@ -147,103 +154,11 @@ The A11y Engineer's Definition of Done centers on **WCAG 2.1 AA compliance**, **
 
 ---
 
-## Accessibility Audit Template
+## Output Template
 
-```markdown
-# Accessibility Audit: [Product Name] [Release Date]
-
-## Executive Summary
-
-**Status:** [Compliant / Needs Work]
-**WCAG Level:** [AA / AAA / Non-compliant]
-**Critical Issues:** [Count]
-**Serious Issues:** [Count]
+Use the standard template: [`skills/accessibility-audit/templates/accessibility-audit-template.md`](../../skills/accessibility-audit/templates/accessibility-audit-template.md)
 
 ---
-
-## Detailed Findings
-
-### Critical Issues (Must Fix)
-
-| ID  | Issue                           | Impact                                       | Remedy                     |
-| --- | ------------------------------- | -------------------------------------------- | -------------------------- |
-| C1  | Form labels missing on checkout | Screen reader users cannot complete purchase | Add `<label>` elements     |
-| C2  | Low contrast on error messages  | Low vision users cannot read errors          | Increase contrast to 4.5:1 |
-
-### Serious Issues (Must Fix)
-
-| ID  | Issue                         | Remedy                |
-| --- | ----------------------------- | --------------------- |
-| S1  | Keyboard trap in modal dialog | Add Tab wrap-around   |
-| S2  | No focus indicator on buttons | Add CSS focus styling |
-
-### Moderate Issues (Fix When Possible)
-
-| ID  | Issue                          | Remedy                            |
-| --- | ------------------------------ | --------------------------------- |
-| M1  | ARIA roles could be simplified | Use semantic HTML instead of ARIA |
-
----
-
-## Test Results
-
-**Automated Scan (axe-core):**
-
-- Critical violations: 0 ✅
-- Serious violations: 2 ⚠️
-- Moderate violations: 5
-
-**Manual Testing:**
-
-- Keyboard navigation: Pass ✅
-- Screen reader (NVDA): Pass ✅
-- Colour contrast: 1 issue found ⚠️
-
-**Assistive Technology (Tested):**
-
-- NVDA (Windows): Working ✅
-- VoiceOver (Mac): Working ✅
-- Mobile (iOS VoiceOver): Working ✅
-
----
-
-## Accessibility Checklist for Next Release
-
-- [ ] All critical issues from this audit resolved
-- [ ] Automated scan: 0 Critical, 0 Serious violations
-- [ ] Keyboard navigation tested
-- [ ] Screen reader tested (NVDA + VoiceOver)
-- [ ] Colour contrast verified
-- [ ] Accessibility training completed for team
-
----
-
-## Resources
-
-- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
-- [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/)
-- [axe DevTools Chrome Extension](https://www.deque.com/axe/devtools/)
-```
-
----
-
-## Accessibility Self-Check
-
-```bash
-# Run automated scans locally before submitting PR
-pnpm test:a11y  # jest-axe in unit tests
-pnpm e2e:a11y   # axe-playwright in E2E tests
-
-# Manual checklist
-# 1. Keyboard-only navigation (no mouse)
-# 2. Screen reader testing (NVDA on Windows, VoiceOver on Mac)
-# 3. Zoom to 200% — text remains readable
-# 4. Contrast check (WAVE or Lighthouse)
-# 5. Colour-only signals check (errors, links, etc.)
-```
-
----
-
 ## References
 
 - [WCAG 2.1 Quick Reference – W3C](https://www.w3.org/WAI/WCAG21/quickref/)

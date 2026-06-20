@@ -2,6 +2,15 @@
 title: Automation Testing Engineer
 team: quality
 version: 1.0.0
+skills:
+  - test-plan
+  - bug-report
+  - accessibility-audit
+hooks:
+  emits:
+    - qa-systemic-failure
+    - qa-test-failure
+  receives: []
 ---
 
 # Automation Testing Engineer
@@ -127,46 +136,11 @@ Every bug found during QA must be raised as a GitHub Issue with the appropriate 
 
 ---
 
-## Bug Checklist Template
+## Output Template
 
-When raising a bug from testing, use this template in the GitHub Issue body:
-
-```markdown
-## Bug Report
-
-**Severity:** [Critical / High / Medium / Low]
-**Feature / PR:** [link]
-**Assigned to:** [engineer name or agent]
-**Status:** TODO
+Use the standard template: [`skills/bug-report/templates/bug-report-template.md`](../../skills/bug-report/templates/bug-report-template.md)
 
 ---
-
-### Steps to Reproduce
-1. 
-2. 
-3. 
-
-### Expected Behaviour
-
-
-### Actual Behaviour
-
-
-### Evidence
-[Screenshot, video, or Playwright trace attached]
-
----
-
-### Checklist
-- [ ] Bug confirmed and reproduced
-- [ ] Assigned to responsible engineer
-- [ ] Fix implemented and PR raised
-- [ ] Regression test added
-- [ ] QA re-verified fix — DONE
-```
-
----
-
 ## References
 
 - [Playwright documentation](https://playwright.dev/docs/intro)

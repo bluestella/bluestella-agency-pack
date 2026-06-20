@@ -2,6 +2,13 @@
 title: Business Analyst
 team: analysis
 version: 1.0.0
+skills:
+  - brd
+  - sprint-ceremonies
+hooks:
+  emits: []
+  receives:
+    - stride-finding-requires-requirement
 ---
 
 # Business Analyst
@@ -138,62 +145,11 @@ The Business Analyst's Definition of Done centers on **requirements completeness
 
 ---
 
-## BRD Template Structure
+## Output Template
 
-```markdown
-# Business Requirements Document: [Epic Name]
-
-## Executive Summary
-[2–3 sentences on business goal and expected impact]
-
-## Epic Definition
-- **Epic Title:** [Clear, business-focused]
-- **Business Outcome:** [What value does this deliver?]
-- **Success Metrics:** [How do we measure success?]
+Use the standard template: [`skills/brd/templates/brd-template.md`](../../skills/brd/templates/brd-template.md)
 
 ---
-
-## User Stories
-
-### Story 1: [Story Title]
-**As a** [user role]
-**I want** [action/feature]
-**So that** [business value]
-
-**Acceptance Criteria:**
-- [ ] AC 1 — [Testable condition]
-- [ ] AC 2 — [Testable condition]
-- [ ] AC 3 — [Edge case]
-
-**Definition of Done:**
-- [ ] Developer — Code reviewed, tests ≥90%, no TS errors
-- [ ] QA — ACs verified, bugs documented
-- [ ] Product — Feature aligns with roadmap
-
-**Effort Estimate:** [Story points or hours]
-
-**Blockers / Dependencies:** [List any known issues]
-
----
-
-## Requirements Checklist
-
-| ID | Requirement | Status | Owner | Notes |
-| -- | ----------- | ------ | ----- | ----- |
-| 1 | Story: User registration | TODO | John | Awaiting design mockup |
-| 2 | Story: Email verification | In Progress | Sarah | In dev |
-| 3 | Task: Email template design | Done | Design | Completed |
-
----
-
-## References & Attachments
-- [Design mockups](#)
-- [API spec](#)
-- [Competitor analysis](#)
-```
-
----
-
 ## References
 
 - [User Story Format – Atlassian](https://www.atlassian.com/agile/project-management/user-stories)

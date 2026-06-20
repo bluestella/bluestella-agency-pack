@@ -2,6 +2,14 @@
 title: Performance Testing Engineer
 team: quality
 version: 1.0.0
+skills:
+  - performance-baseline
+  - test-plan
+  - bug-report
+hooks:
+  emits:
+    - performance-sla-breach
+  receives: []
 ---
 
 # Performance Testing Engineer
@@ -137,22 +145,11 @@ Performance regressions are tracked identically to functional bugs.
 
 ---
 
-## Performance Baseline Document
+## Output Template
 
-After each release, record the baseline in `docs/performance-baselines.md`:
-
-```markdown
-## Release: [version] — [date]
-
-| Page / Endpoint | LCP | INP | CLS | p95 API | p99 API |
-| --------------- | --- | --- | --- | ------- | ------- |
-| /home           |     |     |     | —       | —       |
-| /dashboard      |     |     |     | —       | —       |
-| POST /api/users | —   | —   | —   |         |         |
-```
+Use the standard template: [`skills/performance-baseline/templates/performance-baseline-template.md`](../../skills/performance-baseline/templates/performance-baseline-template.md)
 
 ---
-
 ## References
 
 - [Google Core Web Vitals thresholds](https://web.dev/articles/vitals)

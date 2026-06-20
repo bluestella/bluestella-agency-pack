@@ -6,6 +6,11 @@ description: >
   Use when documenting system architecture, creating architecture decisions, sharing
   architecture with a team, designing new system structure, or aligning cross-team
   understanding of the current or target-state architecture.
+instructions:
+  - c4-diagramming
+agents:
+  - solution-architect
+triggers: []
 metadata:
   author: bluestella
   version: "1.0"

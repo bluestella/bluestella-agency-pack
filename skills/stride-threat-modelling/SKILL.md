@@ -6,6 +6,14 @@ description: >
   Documents each threat with likelihood, impact, severity, and mitigation strategies.
   Use when threat modelling a component, conducting security design reviews, identifying
   security requirements, assessing attack surface, or designing incident response.
+instructions:
+  - security
+agents:
+  - security-architect
+  - security-engineer
+triggers:
+  - stride-threat-finding
+  - stride-finding-requires-requirement
 metadata:
   author: bluestella
   version: "1.0"

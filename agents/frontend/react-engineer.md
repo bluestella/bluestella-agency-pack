@@ -2,6 +2,17 @@
 title: React Engineer
 team: frontend
 version: 1.0.0
+skills:
+  - bug-report
+  - test-plan
+hooks:
+  emits:
+    - deployment-readiness-signal
+  receives:
+    - performance-sla-breach
+    - qa-test-failure
+    - stride-threat-finding
+    - pr-score-below-threshold
 ---
 
 # React Engineer

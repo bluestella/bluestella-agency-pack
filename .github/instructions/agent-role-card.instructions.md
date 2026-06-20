@@ -17,8 +17,21 @@ File names: kebab-case only (e.g. `solution-architect.md`, `a11y-engineer.md`).
 title: Human-readable role name
 team: [team value from list above]
 version: 1.0.0
+skills:
+  - skill-name          # skills this agent activates (matches skills/[skill-name]/ directory)
+hooks:
+  emits:
+    - trigger-name      # hook triggers this agent fires when certain conditions occur
+  receives:
+    - trigger-name      # hook triggers this agent listens for and must act on
 ---
 ```
+
+`skills` is a flat list of skill directory names the agent can invoke. Each name must match a directory under `skills/`.
+
+`hooks.emits` lists hook trigger names (matching the `trigger:` field in hook files) that this agent fires.
+`hooks.receives` lists hook trigger names that are addressed to this agent (matching `to:` in hook files).
+Use `[]` for empty emits or receives arrays.
 
 ## Required sections (in order)
 

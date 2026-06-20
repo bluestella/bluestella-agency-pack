@@ -2,6 +2,20 @@
 title: Microservices Engineer
 team: backend
 version: 1.0.0
+skills:
+  - api-contract-specification
+  - database-schema-design
+  - bug-report
+  - adr
+hooks:
+  emits:
+    - deployment-readiness-signal
+  receives:
+    - api-contract-violation
+    - performance-sla-breach
+    - qa-test-failure
+    - stride-threat-finding
+    - pr-score-below-threshold
 ---
 
 # Microservices Engineer

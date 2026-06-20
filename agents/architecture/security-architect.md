@@ -2,6 +2,14 @@
 title: Security Architect
 team: architecture
 version: 1.0.0
+skills:
+  - security-architecture
+  - stride-threat-modelling
+  - adr
+hooks:
+  emits: []
+  receives:
+    - infrastructure-security-misconfiguration
 ---
 
 # Security Architect
@@ -146,100 +154,11 @@ The Security Architect's Definition of Done centers on **threat model completene
 
 ---
 
-## Security Architecture Template
+## Output Template
 
-```markdown
-# Security Architecture: [Project Name]
-
-## Executive Summary
-
-[Overview of security approach and key principles]
-
-## STRIDE Threat Model
-
-[OWASP Threat Dragon diagram]
-
-### Critical Threats & Mitigations
-
-| Threat                     | Category               | Severity | Mitigation                                   |
-| -------------------------- | ---------------------- | -------- | -------------------------------------------- |
-| SQL injection in order API | Tampering              | Critical | Parameterized queries, input validation, WAF |
-| Unauthorized API access    | Spoofing               | High     | OAuth 2.0 + API key rotation                 |
-| PII exposure in logs       | Information Disclosure | Critical | Redaction filters, encryption at rest        |
+Use the standard template: [`skills/security-architecture/templates/security-architecture-template.md`](../../skills/security-architecture/templates/security-architecture-template.md)
 
 ---
-
-## Authentication & Authorization
-
-**Mechanism:** OAuth 2.0 (Authorization Code flow) with JWT tokens
-
-**Token expiration:** 1 hour (short-lived) + refresh token (7 days)
-
-**MFA:** Required for admin operations; optional for users (TOTP or U2F)
-
-**RBAC Roles:**
-
-- Admin: Full access
-- User: Read own data, write own orders
-- Analyst: Read-only access to aggregated data
-
----
-
-## Data Protection
-
-**At Rest:**
-
-- Database: AES-256 encryption (RDS encryption)
-- Object storage (S3): AES-256 encryption
-- Backups: Encrypted, stored in separate region
-
-**In Transit:**
-
-- TLS 1.3 (minimum 1.2)
-- Certificate pinning for critical APIs
-
-**Secrets Management:**
-
-- Service credentials: AWS Secrets Manager
-- API keys: Vercel environment variables (encrypted)
-- Database passwords: Auto-rotated every 90 days
-
----
-
-## Compliance Mapping
-
-| Requirement                | Control                                     | Verification           |
-| -------------------------- | ------------------------------------------- | ---------------------- |
-| GDPR: Data retention limit | Automated purge after 2 years               | Quarterly audit        |
-| GDPR: Right to deletion    | Soft-delete + backup restore within 30 days | Tested quarterly       |
-| PCI-DSS: No PII in logs    | Log redaction filter on payment data        | Code review + scanning |
-
----
-
-## Incident Response Plan
-
-**Detection:** CloudWatch alarms + manual review (on-call rotation)
-
-**Severity Levels:**
-
-- Critical (P0): System down, data breach → immediate response
-- High (P1): Data loss risk, auth failure → within 1 hour
-- Medium (P2): Degraded functionality → within 4 hours
-
-**Escalation Path:** On-call engineer → Manager → CISO (if breach suspected)
-
----
-
-## References & Attachments
-
-- [OWASP Top 10 (2023)](#)
-- [NIST Cybersecurity Framework](#)
-- [AWS Well-Architected Security Pillar](#)
-- [Incident Response Playbook](#)
-```
-
----
-
 ## References
 
 - [STRIDE Threat Modelling – Microsoft](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats)

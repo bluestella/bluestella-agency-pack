@@ -2,6 +2,13 @@
 title: Data Architect
 team: architecture
 version: 1.0.0
+skills:
+  - data-architecture
+  - database-schema-design
+  - adr
+hooks:
+  emits: []
+  receives: []
 ---
 
 # Data Architect
@@ -139,83 +146,11 @@ The Data Architect's Definition of Done centers on **data model clarity**, **gov
 
 ---
 
-## Data Architecture Template
+## Output Template
 
-```markdown
-# Data Architecture: [Project Name]
-
-## Data Model
-
-### Entity-Relationship Diagram (ERD)
-[Mermaid ERD diagram]
-
-### Key Entities
-
-**Users Table**
-| Column | Type | Constraints | Description |
-| ------ | ---- | ----------- | ----------- |
-| id | UUID | PK | User identifier |
-| email | VARCHAR | UNIQUE, NOT NULL | User email |
-| created_at | TIMESTAMP | NOT NULL, DEFAULT NOW() | Creation timestamp |
-| ...
+Use the standard template: [`skills/data-architecture/templates/data-architecture-template.md`](../../skills/data-architecture/templates/data-architecture-template.md)
 
 ---
-
-## Data Governance
-
-**Data Owner:** [Name & contact]
-**Steward:** [Name & contact]
-**Tier:** [Confidential / Internal / Public]
-
-**Access Policy:**
-- Read: Authenticated users
-- Write: Data owner + service accounts
-- Delete: Data owner only (soft-delete only)
-
----
-
-## Data Lineage
-
-**Order Data Pipeline:**
-1. External API → Order ingestion service
-2. Order service processes → Order table in PostgreSQL
-3. ETL job transforms → analytics warehouse (dbt)
-4. BI tool queries → dashboards
-
----
-
-## Compliance Mapping
-
-| Regulation | Requirement | Technical Control |
-| ---------- | ----------- | ------------------ |
-| GDPR | Data retention limit | Automated purge job after 2 years |
-| GDPR | Right to deletion | Soft-delete flag; restore from backup within 30 days |
-| CCPA | Data minimization | Only collect required fields |
-
----
-
-## Backup & DR
-
-**RTO:** 4 hours
-**RPO:** 1 hour
-
-**Backup Schedule:**
-- Daily incremental backups (retained 7 days)
-- Weekly full backups (retained 4 weeks)
-- Monthly backups (retained 1 year)
-
-**Restore Testing:** Monthly dry-run on staging environment
-
----
-
-## References & Attachments
-- [Full ERD in Lucidchart](#)
-- [Compliance checklist](#)
-- [Performance benchmarks](#)
-```
-
----
-
 ## References
 
 - [Database Design Best Practices – Use The Index, Luke](https://use-the-index-luke.com/)

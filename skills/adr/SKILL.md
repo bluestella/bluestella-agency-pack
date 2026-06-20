@@ -5,6 +5,15 @@ description: >
   with context, options considered, rationale, and consequences. Use when documenting
   architecture decisions, choosing between technology options, recording trade-offs,
   keeping decision history for future teams, or conducting architectural retrospectives.
+instructions: []
+agents:
+  - solution-architect
+  - data-architect
+  - integration-architect
+  - security-architect
+  - tech-lead
+  - microservices-engineer
+triggers: []
 metadata:
   author: bluestella
   version: "1.0"

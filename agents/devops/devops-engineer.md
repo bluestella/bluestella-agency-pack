@@ -2,6 +2,17 @@
 title: DevOps / Platform Engineer
 team: devops
 version: 1.0.0
+skills:
+  - post-incident-review
+  - release-notes
+  - performance-baseline
+  - bug-report
+hooks:
+  emits:
+    - deployment-failure
+    - infrastructure-security-misconfiguration
+  receives:
+    - deployment-readiness-signal
 ---
 
 # DevOps / Platform Engineer

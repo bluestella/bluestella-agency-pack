@@ -6,6 +6,17 @@ description: >
   acceptance criteria, coverage goals, and success metrics. Use when planning QA for a
   feature, writing test strategy, defining test scope, ensuring coverage goals, or
   coordinating testing across teams.
+instructions:
+  - testing
+agents:
+  - automation-testing-engineer
+  - performance-testing-engineer
+  - a11y-engineer
+  - react-engineer
+  - react-native-engineer
+triggers:
+  - qa-test-failure
+  - qa-systemic-failure
 metadata:
   author: bluestella
   version: "1.0"

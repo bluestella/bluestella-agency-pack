@@ -5,6 +5,18 @@ description: >
   severity classification, environment details, and evidence placeholders. Use when reporting bugs,
   creating QA tickets, communicating issues to developers, tracking quality issues, or building
   a structured bug database.
+instructions:
+  - testing
+agents:
+  - automation-testing-engineer
+  - performance-testing-engineer
+  - a11y-engineer
+  - react-engineer
+  - react-native-engineer
+  - microservices-engineer
+  - devops-engineer
+triggers:
+  - qa-test-failure
 metadata:
   author: bluestella
   version: "1.0"

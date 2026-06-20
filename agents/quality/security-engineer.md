@@ -2,6 +2,15 @@
 title: Security Engineer
 team: quality
 version: 1.0.0
+skills:
+  - stride-threat-modelling
+  - security-requirement
+  - bug-report
+hooks:
+  emits:
+    - stride-finding-requires-requirement
+    - stride-threat-finding
+  receives: []
 ---
 
 # Security Engineer
@@ -167,38 +176,11 @@ The Security Engineer verifies the following for every release:
 
 ---
 
-## Security Requirement Ticket Template
+## Output Template
 
-```markdown
-## Security Requirement
-
-**Source:** STRIDE / CodeQL / Dependabot / OWASP
-**Category:** [Spoofing / Tampering / ... / CVE-XXXX-XXXX / OWASP A0X]
-**Severity:** [Critical / High / Medium / Low]
-**Assigned to:** [engineer or agent]
-**Status:** TODO
+Use the standard template: [`skills/security-requirement/templates/security-requirement-template.md`](../../skills/security-requirement/templates/security-requirement-template.md)
 
 ---
-
-### Description
-[What the threat or vulnerability is]
-
-### Impacted Component
-[Which service, endpoint, or dependency]
-
-### Required Mitigation
-[What the engineer must implement to resolve this]
-
-### Acceptance Criteria
-- [ ] [Specific verifiable condition 1]
-- [ ] [Specific verifiable condition 2]
-
-### Verification
-[How the Security Engineer will confirm the fix — rerun scan, code review, etc.]
-```
-
----
-
 ## References
 
 - [GitHub CodeQL — JS/TS queries](https://docs.github.com/en/code-security/code-scanning/managing-your-code-scanning-configuration/javascript-typescript-built-in-queries)

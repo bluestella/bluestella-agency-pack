@@ -2,6 +2,20 @@
 title: Tech Lead
 team: management
 version: 1.0.0
+skills:
+  - pr-review
+  - adr
+  - release-notes
+  - post-incident-review
+  - sprint-ceremonies
+hooks:
+  emits:
+    - pr-score-below-threshold
+    - technical-debt-architectural-review
+  receives:
+    - deployment-failure
+    - roadmap-technical-conflict
+    - qa-systemic-failure
 ---
 
 # Tech Lead
@@ -197,28 +211,11 @@ coverage: {
 
 ---
 
-### Summary Scorecard (per PR)
+### Output Template
 
-```
-Engineer: ___________________
-PR / Deliverable: ___________
-Reviewer (Tech Lead): _______
-Date: _______________________
-
-Gate 1 — Unit Test Coverage      [ ] PASS  [ ] FAIL
-Gate 2 — Type Safety              [ ] PASS  [ ] FAIL
-Gate 3 — Linting                  [ ] PASS  [ ] FAIL
-Gate 4 — Code Quality (SonarCloud)[ ] PASS  [ ] FAIL
-Gate 5 — Security Vulnerabilities [ ] PASS  [ ] FAIL
-Gate 6 — QA Bug Checklist         [ ] PASS  [ ] FAIL
-Gate 7 — No Debug Artifacts       [ ] PASS  [ ] FAIL
-
-Overall Result: [ ] PASS — approved for merge
-                [ ] FAIL — bug ticket raised → reassigned
-```
+Use the standard template: [`skills/pr-review/templates/pr-scorecard-template.md`](../../skills/pr-review/templates/pr-scorecard-template.md)
 
 ---
-
 ## References
 
 - [SonarCloud docs — JavaScript/TypeScript coverage](https://docs.sonarsource.com/sonarqube-cloud/analyzing-source-code/test-coverage/javascript-typescript-test-coverage/)

@@ -6,6 +6,13 @@ description: >
   and versioning strategy. Use when designing API contracts, documenting REST endpoints,
   ensuring frontend/backend alignment, defining error handling standards, or planning
   API version management.
+instructions:
+  - api-patterns
+agents:
+  - integration-architect
+  - microservices-engineer
+triggers:
+  - api-contract-violation
 metadata:
   author: bluestella
   version: "1.0"

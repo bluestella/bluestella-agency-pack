@@ -2,6 +2,14 @@
 title: Product Manager
 team: management
 version: 1.0.0
+skills:
+  - brd
+  - sprint-ceremonies
+  - release-notes
+hooks:
+  emits:
+    - roadmap-technical-conflict
+  receives: []
 ---
 
 # Product Manager
@@ -105,35 +113,11 @@ The Product Manager's Definition of Done centers on **roadmap clarity**, **stake
 
 ---
 
-## Sprint Ceremonies Checklist
+## Output Template
 
-### Sprint Planning
-
-- [ ] Goal clearly stated
-- [ ] All stories estimated
-- [ ] Team commits to realistic capacity
-- [ ] Dependencies identified
-
-### Sprint Review
-
-- [ ] Acceptance criteria verified
-- [ ] Stakeholder feedback collected
-- [ ] Metrics reviewed and communicated
-
-### Sprint Retrospective
-
-- [ ] Team identifies 1–3 improvements
-- [ ] Action items assigned with owners
-- [ ] Retro feedback informs process changes
-
-### Backlog Refinement (Weekly)
-
-- [ ] Next 2 sprints groomed
-- [ ] New items clarified
-- [ ] Blocked items resolved or re-prioritized
+Use the standard template: [`skills/sprint-ceremonies/templates/sprint-ceremonies-template.md`](../../skills/sprint-ceremonies/templates/sprint-ceremonies-template.md)
 
 ---
-
 ## References
 
 - [Agile User Story Format – Atlassian](https://www.atlassian.com/agile/project-management/user-stories)

@@ -2,6 +2,14 @@
 title: Integration Architect
 team: architecture
 version: 1.0.0
+skills:
+  - integration-architecture
+  - api-contract-specification
+  - adr
+hooks:
+  emits:
+    - api-contract-violation
+  receives: []
 ---
 
 # Integration Architect
@@ -133,102 +141,11 @@ The Integration Architect's Definition of Done centers on **API completeness**, 
 
 ---
 
-## Integration Architecture Template
+## Output Template
 
-```markdown
-# Integration Architecture: [System Names]
-
-## Overview
-[2–3 sentences on integration scope and approach]
-
-## Integration Flows
-
-### Flow 1: [Descriptive Name]
-**Participants:** System A → System B → System C
-
-**Sequence Diagram:**
-[Mermaid sequence diagram]
-
-**API Endpoints:**
-- POST /api/v1/events (from System A)
-- GET /api/v1/data/:id (to System B)
-
-**Error Handling:**
-- Timeout (System A → System B): Retry up to 3x with exponential backoff
-- 5xx error: Circuit breaker opens after 5 consecutive failures
+Use the standard template: [`skills/integration-architecture/templates/integration-architecture-template.md`](../../skills/integration-architecture/templates/integration-architecture-template.md)
 
 ---
-
-## API Contracts
-
-### API 1: [Endpoint Name]
-
-**Method:** POST
-**Path:** /api/v1/submit-order
-**Authentication:** Bearer token (JWT)
-
-**Request Schema:**
-\`\`\`json
-{
-  "orderId": "string (required)",
-  "items": [
-    {
-      "sku": "string",
-      "quantity": "number"
-    }
-  ],
-  "customerId": "string"
-}
-\`\`\`
-
-**Response Schema (200 OK):**
-\`\`\`json
-{
-  "status": "accepted",
-  "processingId": "string"
-}
-\`\`\`
-
-**Error Responses:**
-- 400 Bad Request: Invalid order data
-- 401 Unauthorized: Missing or invalid authentication
-- 429 Too Many Requests: Rate limit exceeded (max 100 req/min)
-- 500 Internal Server Error: Processing failure
-
-**SLA:**
-- Response time: p95 ≤ 500ms
-- Availability: 99.9% uptime
-- Retry: Exponential backoff, max 3 retries
-
----
-
-## Data Consistency & Transformations
-
-| Source System | Transform | Target System | Consistency Model |
-| ------------- | --------- | ------------- | ----------------- |
-| Order System | Map OrderDTO to OrderEvent | Warehouse System | Eventual consistency (publish event) |
-| ...
-
----
-
-## Monitoring & Alerting
-
-| Metric | Threshold | Action |
-| ------ | --------- | ------ |
-| API response time p95 | > 1s | Alert |
-| Error rate | > 5% | Alert |
-| Order processing latency | > 5 minutes | Alert + manual review |
-
----
-
-## References & Attachments
-- [OpenAPI spec (.yaml)](#)
-- [Data flow diagram](#)
-- [Performance baselines](#)
-```
-
----
-
 ## References
 
 - [OpenAPI Specification](https://swagger.io/specification/)

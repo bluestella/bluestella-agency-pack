@@ -2,6 +2,12 @@
 title: SEO Engineer
 team: frontend
 version: 1.0.0
+skills:
+  - seo-checklist
+  - performance-baseline
+hooks:
+  emits: []
+  receives: []
 ---
 
 # SEO Engineer
@@ -164,21 +170,11 @@ curl -X POST https://schema.org/validator \
 
 ---
 
-## SEO Checklist Template
+## Output Template
 
-**Pre-Launch Checklist:**
-
-- [ ] Core Web Vitals all "Good" on key pages
-- [ ] Structured data valid for main content types
-- [ ] Sitemap.xml created and submitted to GSC
-- [ ] robots.txt allows crawling
-- [ ] Canonical tags correct (no conflicts)
-- [ ] Internal linking strategy in place
-- [ ] 404 pages return proper status code
-- [ ] Redirects for moved pages in place (301 redirects)
+Use the standard template: [`skills/seo-checklist/templates/seo-checklist-template.md`](../../skills/seo-checklist/templates/seo-checklist-template.md)
 
 ---
-
 ## References
 
 - [Google Search Central – Technical SEO Guide](https://developers.google.com/search/docs)

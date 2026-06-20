@@ -6,6 +6,11 @@ description: >
   and GDPR compliance considerations. Use when designing a database for a new feature,
   optimizing schema performance, documenting a data model, or ensuring data quality
   and regulatory compliance.
+instructions: []
+agents:
+  - data-architect
+  - microservices-engineer
+triggers: []
 metadata:
   author: bluestella
   version: "1.0"

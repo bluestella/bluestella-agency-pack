@@ -6,6 +6,12 @@ description: >
   and a requirements checklist with status tracking. Use when writing requirements, creating
   an epic, drafting user stories, defining acceptance criteria, breaking down a business goal
   into development work items, or organizing requirements in JIRA/GitHub.
+instructions:
+  - brd-authoring
+agents:
+  - business-analyst
+  - product-manager
+triggers: []
 metadata:
   author: bluestella
   version: "1.0"
