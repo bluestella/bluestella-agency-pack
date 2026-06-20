@@ -113,15 +113,19 @@ A **Bug Report** documents a defect in the system, including how to reproduce it
 
 **Browser Console (F12 → Console tab):**
 ```
+
 [ERROR] Upload failed: Network error 500
 [INFO] Retry attempt 1 of 3...
 [ERROR] Still failing on retry
+
 ```
 
 **Server Logs:**
 ```
+
 2026-06-20 14:32:45 ERROR [upload-handler] S3PutObjectFailed: Access Denied (403)
 2026-06-20 14:32:45 ERROR [upload-handler] No fallback, marking upload as complete
+
 ```
 
 ---
@@ -262,6 +266,7 @@ After the fix is deployed:
 ## Severity Guide
 
 ### Critical (🔴)
+
 - System is down or unusable
 - Data loss or corruption
 - Security breach
@@ -269,18 +274,21 @@ After the fix is deployed:
 - Example: "Login page returns 500 error for all users"
 
 ### High (🟠)
+
 - Core feature is broken
 - Affects many users
 - No easy workaround
 - Example: "File upload fails for files > 50MB"
 
 ### Medium (🟡)
+
 - Feature works but has issues
 - Workaround exists or impacts few users
 - Low business impact
 - Example: "Error message typo: 'Pasword' instead of 'Password'"
 
 ### Low (🔵)
+
 - Cosmetic or minor
 - No impact on functionality
 - Nice-to-have fix

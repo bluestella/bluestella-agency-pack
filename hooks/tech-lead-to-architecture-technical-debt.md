@@ -12,6 +12,7 @@ description: Trigger for when Tech Lead identifies technical debt requiring arch
 **Event:** Tech Lead identifies technical debt or engineering-architecture misalignment during code reviews
 
 **Detection:**
+
 - Multiple PRs failing code review for same architectural reason
 - Developer requests architectural change during implementation
 - Performance bottleneck traced to architectural choice
@@ -19,6 +20,7 @@ description: Trigger for when Tech Lead identifies technical debt requiring arch
 - Scaling issues (can't handle expected load)
 
 **Severity:**
+
 - 🔴 Critical: Blocks feature delivery, security risk, scalability risk
 - 🟠 High: Impacts multiple teams, affects future velocity
 - 🟡 Medium: Accumulating technical debt, should address in next quarter

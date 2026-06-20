@@ -12,6 +12,7 @@ description: Trigger for when Product Manager's roadmap conflicts with Tech Lead
 **Event:** Roadmap goals conflict with technical constraints or technical debt
 
 **Conflict Types:**
+
 - Feature request requires architectural changes not on roadmap
 - Technical debt is blocking new feature development
 - Scaling issues prevent feature deployment
@@ -19,6 +20,7 @@ description: Trigger for when Product Manager's roadmap conflicts with Tech Lead
 - Performance regression from recent changes needs investigation
 
 **Severity:**
+
 - 🔴 Critical: Technical blocker prevents any feature development
 - 🟠 High: Feature delayed, needs timeline adjustment
 - 🟡 Medium: Minor technical trade-off, needs decision
@@ -76,6 +78,7 @@ description: Trigger for when Product Manager's roadmap conflicts with Tech Lead
 ### Example: Multi-Language Support
 
 **Option 1: Schema Refactor (Recommended)**
+
 - **Effort:** 2 weeks
 - **Benefit:** Clean, scalable, maintainable
 - **Timeline:** Feature delayed to late Q3
@@ -83,12 +86,14 @@ description: Trigger for when Product Manager's roadmap conflicts with Tech Lead
 - **Trade-off:** Schedule slip, but better quality
 
 **Option 2: Workaround (Quick)**
+
 - **Effort:** 1 week (add language parameter, no schema change)
 - **Benefit:** Feature ships on schedule
 - **Downside:** Technical debt accumulates, hard to scale to many languages
 - **Trade-off:** Ship fast, pay debt later
 
 **Option 3: Defer Feature**
+
 - **Effort:** 0 weeks (skip Q3)
 - **Benefit:** No technical work, roadmap stays clean
 - **Downside:** Feature misses customer deadline
@@ -110,12 +115,12 @@ description: Trigger for when Product Manager's roadmap conflicts with Tech Lead
 
 **Tech Lead + Product Manager decide using:**
 
-| Factor | Weight | Considerations |
-| ------ | ------ | --------------- |
-| Customer impact | 40% | Will customers accept delay? Is feature business-critical? |
-| Technical impact | 30% | How much technical debt? How much scaling impact? |
-| Timeline | 20% | How urgent is the feature? Can we slip Q3 schedule? |
-| Resource cost | 10% | Can we hire contractors? Use external library? |
+| Factor           | Weight | Considerations                                             |
+| ---------------- | ------ | ---------------------------------------------------------- |
+| Customer impact  | 40%    | Will customers accept delay? Is feature business-critical? |
+| Technical impact | 30%    | How much technical debt? How much scaling impact?          |
+| Timeline         | 20%    | How urgent is the feature? Can we slip Q3 schedule?        |
+| Resource cost    | 10%    | Can we hire contractors? Use external library?             |
 
 **Decision Rule:** If customer impact + timeline > 60%, choose Option 2 (ship with workaround). Otherwise, choose Option 1 (invest in tech).
 

@@ -9,6 +9,7 @@ description: "Enforce test structure, coverage requirements, and quality practic
 ### Naming Convention: [Unit]_[Scenario]_[Expected_Outcome]
 
 **Examples:**
+
 - ✅ `userRepository_findById_returnsUser`
 - ✅ `userRepository_findById_throwsIfNotFound`
 - ✅ `calculateDiscount_appliesSeasonsalRate_whenDateInPromotion`
@@ -17,15 +18,15 @@ description: "Enforce test structure, coverage requirements, and quality practic
 ### Arrange / Act / Assert (AAA) Structure
 
 ```typescript
-describe('calculateDiscount', () => {
-  it('calculateDiscount_appliesSeasonsalRate_whenDateInPromotion', () => {
+describe("calculateDiscount", () => {
+  it("calculateDiscount_appliesSeasonsalRate_whenDateInPromotion", () => {
     // ⬇️ Arrange: Set up test data
-    const date = new Date('2026-07-04'); // Independence Day (summer promotion)
+    const date = new Date("2026-07-04"); // Independence Day (summer promotion)
     const basePrice = 100;
-    
+
     // ⬇️ Act: Execute the function
     const discountedPrice = calculateDiscount(basePrice, date);
-    
+
     // ⬇️ Assert: Verify result
     expect(discountedPrice).toBe(75); // 25% summer discount
   });
@@ -42,6 +43,7 @@ describe('calculateDiscount', () => {
 - **Target:** 95% for critical business logic (payments, auth)
 
 **Coverage types:**
+
 - Statements: 90%+ (did all code run?)
 - Lines: 90%+ (did all lines execute?)
 - Branches: 90%+ (did all if/else paths execute?)
@@ -55,28 +57,31 @@ describe('calculateDiscount', () => {
 - **Unit tests:** Fast, run in milliseconds, no external calls
 
 Example:
+
 ```typescript
 // ✅ GOOD: Mock database
-vi.mock('@/db', () => ({
+vi.mock("@/db", () => ({
   db: {
-    query: vi.fn().mockResolvedValue([{ id: '123', email: 'user@example.com' }])
-  }
+    query: vi
+      .fn()
+      .mockResolvedValue([{ id: "123", email: "user@example.com" }]),
+  },
 }));
 
 // ❌ BAD: Makes real DB call
-const user = await db.query('SELECT * FROM users');
+const user = await db.query("SELECT * FROM users");
 ```
 
 ## Test Types & Tools
 
-| Type | Tool | Coverage | Speed | Purpose |
-| ---- | ---- | -------- | ----- | ------- |
-| **Unit** | Vitest | ≥90% | <1s | Test functions in isolation |
-| **Integration** | Jest | ≥80% | 5-10s | Test service + repository together |
-| **API** | Playwright | N/A | 10-30s | Test HTTP endpoints |
-| **Visual** | toHaveScreenshot | N/A | 10-30s | Test UI snapshot regression |
-| **E2E** | Playwright | N/A | 1-5m | Test full user workflows |
-| **Performance** | k6 | N/A | 1-5m | Test load, throughput, latency |
+| Type            | Tool             | Coverage | Speed  | Purpose                            |
+| --------------- | ---------------- | -------- | ------ | ---------------------------------- |
+| **Unit**        | Vitest           | ≥90%     | <1s    | Test functions in isolation        |
+| **Integration** | Jest             | ≥80%     | 5-10s  | Test service + repository together |
+| **API**         | Playwright       | N/A      | 10-30s | Test HTTP endpoints                |
+| **Visual**      | toHaveScreenshot | N/A      | 10-30s | Test UI snapshot regression        |
+| **E2E**         | Playwright       | N/A      | 1-5m   | Test full user workflows           |
+| **Performance** | k6               | N/A      | 1-5m   | Test load, throughput, latency     |
 
 ## Bug-Fix Protocol
 
@@ -87,10 +92,11 @@ const user = await db.query('SELECT * FROM users');
 5. **Commit** with message: `fix(component): description. Fixes #1234`
 
 Example:
+
 ```typescript
 // Step 1: Add failing test
-it('userRepository_findById_doesNotReturnDeletedUsers', () => {
-  const user = await userRepository.findById('deleted-user-id');
+it("userRepository_findById_doesNotReturnDeletedUsers", () => {
+  const user = await userRepository.findById("deleted-user-id");
   expect(user).toBeNull(); // Should not return soft-deleted users
 });
 
@@ -109,9 +115,11 @@ it('userRepository_findById_doesNotReturnDeletedUsers', () => {
 **Function:** `calculateDiscount(price: number, quantity: number)`
 
 Happy path:
+
 - ✅ Normal purchase: quantity 10, discount applies
 
 Edge cases:
+
 - ✅ Zero quantity
 - ✅ Negative price (invalid)
 - ✅ Very large quantity (overflow)
@@ -121,9 +129,11 @@ Edge cases:
 **Function:** `userRepository.findById(id: string)`
 
 Happy path:
+
 - ✅ User exists and returned
 
 Edge cases:
+
 - ✅ User doesn't exist (returns null)
 - ✅ User is soft-deleted (returns null)
 - ✅ Invalid ID format (throws error)
@@ -137,13 +147,14 @@ Edge cases:
 - **Test recovery:** Can the code recover from errors?
 
 Example:
+
 ```typescript
-it('userRepository_findById_throwsIfDatabaseFails', async () => {
-  vi.mocked(db.query).mockRejectedValue(new Error('Connection timeout'));
-  
+it("userRepository_findById_throwsIfDatabaseFails", async () => {
+  vi.mocked(db.query).mockRejectedValue(new Error("Connection timeout"));
+
   expect(async () => {
-    await userRepository.findById('123');
-  }).rejects.toThrow('Connection timeout');
+    await userRepository.findById("123");
+  }).rejects.toThrow("Connection timeout");
 });
 ```
 
@@ -164,6 +175,7 @@ Tools: **k6**, **Apache JMeter**, **Locust**
 - **Screen reader:** Test with NVDA or JAWS
 
 Example:
+
 ```typescript
 import { axe, toHaveNoViolations } from 'jest-axe';
 

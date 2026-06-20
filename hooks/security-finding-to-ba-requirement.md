@@ -12,12 +12,14 @@ description: Trigger for when Security Engineer finds STRIDE threat that require
 **Event:** STRIDE threat modeling identifies security threat that requires new business requirement or epic
 
 **Detection:**
+
 - Security threat cannot be fixed with code changes (requires architecture/process change)
 - Threat requires new feature: e.g., MFA, audit logging, encryption key rotation
 - Compliance requirement discovered: GDPR, SOC 2, PCI-DSS compliance gap
 - Policy requirement: e.g., "All user deletions must be logged"
 
 **Severity:**
+
 - 🔴 Critical: Compliance violation, data breach risk
 - 🟠 High: Security risk, should be fixed this quarter
 - 🟡 Medium: Security improvement, defer to next quarter
@@ -38,7 +40,10 @@ description: Trigger for when Security Engineer finds STRIDE threat that require
   "epic_proposal": {
     "title": "Implement MFA for Admin Accounts",
     "business_outcome": "Prevent unauthorized admin access",
-    "success_metrics": ["100% of admins using MFA", "0 admin account compromises"]
+    "success_metrics": [
+      "100% of admins using MFA",
+      "0 admin account compromises"
+    ]
   },
   "assigned_to": "Business Analyst",
   "created_at": "ISO 8601 timestamp"
@@ -72,11 +77,13 @@ description: Trigger for when Security Engineer finds STRIDE threat that require
 **Business Outcome:** Prevent unauthorized admin access, achieve SOC 2 compliance
 
 **Success Metrics:**
+
 - 100% of admin accounts have MFA enabled
 - 0 admin account compromises (baseline: currently 2 per year)
 - Login flow uses TOTP or hardware keys
 
 **User Stories:**
+
 1. Admin can enable MFA in account settings
 2. Admin can disable MFA (with recovery codes)
 3. Admin required to use MFA on login
@@ -84,6 +91,7 @@ description: Trigger for when Security Engineer finds STRIDE threat that require
 5. Support can reset MFA for locked-out admins
 
 **Definition of Done:**
+
 - [ ] All user stories complete
 - [ ] Security audit: 0 MFA bypass vulnerabilities
 - [ ] 100% of admins have MFA enabled (compliance requirement)

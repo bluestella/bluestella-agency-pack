@@ -20,16 +20,19 @@ Every Epic answers these questions:
 # Epic: [Feature Name]
 
 ## Business Outcome
+
 [What business goal does this achieve? How does it make users/company better?]
 
 Example: "Enable users to export data in multiple formats (CSV, Excel, JSON), enabling self-service analytics and reducing support burden by 30%."
 
 ## User Personas
+
 [Who benefits? Which user roles?]
 
 Example: "Analytics Manager, Finance Analyst, Data Scientist"
 
 ## Success Metrics
+
 [How do we measure success? Be specific and quantifiable.]
 
 - [ ] 50% of users export data monthly
@@ -38,6 +41,7 @@ Example: "Analytics Manager, Finance Analyst, Data Scientist"
 - [ ] Export completes in < 5 seconds for 100K records
 
 ## User Stories
+
 [At least 3 user stories that make up this epic]
 
 1. Analytics Manager can export data as CSV
@@ -47,21 +51,25 @@ Example: "Analytics Manager, Finance Analyst, Data Scientist"
 ## Definition of Done (by role)
 
 ### Developer
+
 - [ ] All user stories implemented
 - [ ] No console errors or warnings
 - [ ] Code reviewed and merged
 
 ### QA
+
 - [ ] All acceptance criteria tested
 - [ ] Edge cases tested (empty export, large export, special characters)
 - [ ] Visual regression testing passed
 
 ### Product
+
 - [ ] Business outcome achieved (metrics show improvement)
 - [ ] User feedback collected (at least 3 users tested)
 - [ ] Documented in help center
 
 ### Support
+
 - [ ] Support team trained on export feature
 - [ ] FAQ updated with export instructions
 - [ ] Zero unresolved support tickets on this feature
@@ -72,6 +80,7 @@ Example: "Analytics Manager, Finance Analyst, Data Scientist"
 ## User Story Template
 
 Every User Story has:
+
 1. **As a / I want / So that** (context, action, benefit)
 2. **Acceptance Criteria** (specific, testable)
 3. **Definition of Done** (per role)
@@ -104,6 +113,7 @@ Example:
 ## Definition of Done
 
 ### Developer
+
 - [ ] Feature implemented in [branch name]
 - [ ] Code reviewed by [reviewer]
 - [ ] Unit tests written (≥90% coverage)
@@ -112,6 +122,7 @@ Example:
 - [ ] Merged to main
 
 ### QA
+
 - [ ] Tested on Chrome, Firefox, Safari
 - [ ] Tested on desktop + mobile
 - [ ] Tested with < 100 records (fast), > 1M records (slow but works)
@@ -120,12 +131,14 @@ Example:
 - [ ] Performance acceptable (< 5 seconds for 100K records)
 
 ### Product
+
 - [ ] Business value confirmed (Analytics Manager approved)
 - [ ] Help article written (with screenshots)
 - [ ] Feature released to production
 - [ ] Metrics tracked (export volume, usage patterns)
 
 ### Support
+
 - [ ] Support team trained (30-min training session)
 - [ ] FAQ updated
 - [ ] Support tickets on this feature: 0 within first week
@@ -141,9 +154,11 @@ Break each User Story into implementation Tasks:
 # Task 1: Create export API endpoint
 
 ## Description
+
 Build POST /api/exports endpoint that generates CSV export.
 
 ## Technical Requirements
+
 - Accept export parameters: (format: CSV|Excel|JSON, columns, filters)
 - Validate parameters with Zod
 - Query database with user's filters
@@ -151,6 +166,7 @@ Build POST /api/exports endpoint that generates CSV export.
 - Return download URL
 
 ## Acceptance Criteria
+
 - [ ] Endpoint accepts POST /api/exports
 - [ ] Validates format, columns, filters
 - [ ] Returns 400 if validation fails
@@ -159,6 +175,7 @@ Build POST /api/exports endpoint that generates CSV export.
 - [ ] Handles 1M record export without timeout
 
 ## Subtasks
+
 - [ ] Implement CSV generation (use npm package)
 - [ ] Implement Excel generation (use npm package)
 - [ ] Implement JSON generation
@@ -170,9 +187,11 @@ Build POST /api/exports endpoint that generates CSV export.
 # Task 2: Create export UI button and dialog
 
 ## Description
+
 Build React component for export dialog (format selection, column picker).
 
 ## Technical Requirements
+
 - Display "Export" button on dashboard
 - Show dialog with format options
 - Show column picker (checkboxes)
@@ -180,6 +199,7 @@ Build React component for export dialog (format selection, column picker).
 - Download file when ready
 
 ## Acceptance Criteria
+
 - [ ] Export button visible on dashboard
 - [ ] Dialog shows CSV/Excel/JSON options
 - [ ] Column checkboxes work (select/deselect all)
@@ -189,6 +209,7 @@ Build React component for export dialog (format selection, column picker).
 - [ ] Error message shown if export fails
 
 ## Subtasks
+
 - [ ] Create ExportDialog component
 - [ ] Create column picker component
 - [ ] Add error boundary
@@ -207,11 +228,13 @@ Every acceptance criterion should be:
 - ✅ **Measurable:** Use numbers ("< 5 seconds", "≤ 100MB")
 
 ❌ Bad criteria:
+
 - "Export works correctly"
 - "Performance is good"
 - "User experience is improved"
 
 ✅ Good criteria:
+
 - "Export completes within 5 seconds for 100K records"
 - "CSV file is valid (proper headers, escaped values)"
 - "Error message appears within 2 seconds if API fails"
@@ -232,6 +255,7 @@ Every role's DoD should include:
 ## Estimation
 
 **Developer estimates tasks:**
+
 - S = Small (< 4 hours, 1 dev)
 - M = Medium (4-8 hours, 1 dev)
 - L = Large (1-2 days, 1 dev or 2 devs in parallel)

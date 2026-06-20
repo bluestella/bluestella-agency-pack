@@ -62,12 +62,12 @@ A **Database Schema** is the blueprint for how data is organized in the database
 ### Example (Mermaid):
 
 erDiagram
-    ORGANIZATIONS ||--o{ USERS : contains
-    USERS ||--o{ SUBSCRIPTIONS : has
-    SUBSCRIPTIONS ||--o{ INVOICES : generates
-    INVOICES ||--o{ CHARGES : contains
-    ORGANIZATIONS ||--o{ AUDIT_LOG : tracks
-    
+ORGANIZATIONS ||--o{ USERS : contains
+USERS ||--o{ SUBSCRIPTIONS : has
+SUBSCRIPTIONS ||--o{ INVOICES : generates
+INVOICES ||--o{ CHARGES : contains
+ORGANIZATIONS ||--o{ AUDIT_LOG : tracks
+
     ORGANIZATIONS {
         uuid id PK
         string name
@@ -77,7 +77,7 @@ erDiagram
         timestamp created_at
         timestamp deleted_at
     }
-    
+
     USERS {
         uuid id PK
         uuid org_id FK
@@ -90,7 +90,7 @@ erDiagram
         timestamp created_at
         timestamp deleted_at
     }
-    
+
     SUBSCRIPTIONS {
         uuid id PK
         uuid org_id FK
@@ -104,7 +104,7 @@ erDiagram
         timestamp created_at
         timestamp deleted_at
     }
-    
+
     INVOICES {
         uuid id PK
         uuid subscription_id FK
@@ -115,7 +115,7 @@ erDiagram
         timestamp paid_at
         timestamp created_at
     }
-    
+
     CHARGES {
         uuid id PK
         uuid invoice_id FK
@@ -126,7 +126,7 @@ erDiagram
         string failure_reason
         timestamp created_at
     }
-    
+
     AUDIT_LOG {
         uuid id PK
         uuid org_id FK
@@ -147,26 +147,29 @@ erDiagram
 
 ### organizations
 
-| Column | Type | Constraints | Index | Purpose |
-| ------ | ---- | ----------- | ----- | ------- |
-| id | uuid | PK | ✅ (PK) | Unique org identifier |
-| name | varchar(255) | NOT NULL | ❌ | Organization name |
-| slug | varchar(100) | NOT NULL, UK | ✅ (UK) | URL-safe identifier (e.g., acme-corp) |
-| country | varchar(2) | FK → countries | ✅ (FK) | ISO 3166 country code (for tax) |
-| tax_id | varchar(50) | NULL | ✅ | Tax ID / VAT number (GDPR: PII) |
-| created_at | timestamp | NOT NULL, DEFAULT NOW() | ✅ | Record creation |
-| deleted_at | timestamp | NULL | ✅ | Soft delete timestamp |
+| Column     | Type         | Constraints             | Index   | Purpose                               |
+| ---------- | ------------ | ----------------------- | ------- | ------------------------------------- |
+| id         | uuid         | PK                      | ✅ (PK) | Unique org identifier                 |
+| name       | varchar(255) | NOT NULL                | ❌      | Organization name                     |
+| slug       | varchar(100) | NOT NULL, UK            | ✅ (UK) | URL-safe identifier (e.g., acme-corp) |
+| country    | varchar(2)   | FK → countries          | ✅ (FK) | ISO 3166 country code (for tax)       |
+| tax_id     | varchar(50)  | NULL                    | ✅      | Tax ID / VAT number (GDPR: PII)       |
+| created_at | timestamp    | NOT NULL, DEFAULT NOW() | ✅      | Record creation                       |
+| deleted_at | timestamp    | NULL                    | ✅      | Soft delete timestamp                 |
 
 **Indexes:**
+
 - PRIMARY KEY (id)
 - UNIQUE (slug)
 - INDEX (deleted_at) — For queries excluding soft-deleted orgs
 
 **Constraints:**
+
 - CHECK (slug LIKE '[a-z0-9-]+') — Alphanumeric + dashes only
 - FOREIGN KEY (country) REFERENCES countries(code)
 
 **Notes:**
+
 - Slug is immutable once set (for URL stability)
 - deleted_at is nullable; NULL means active. NOT NULL means soft-deleted.
 - tax_id is PII; must be encrypted at rest (see Compliance section)
@@ -175,31 +178,34 @@ erDiagram
 
 ### users
 
-| Column | Type | Constraints | Index | Purpose |
-| ------ | ---- | ----------- | ----- | ------- |
-| id | uuid | PK | ✅ (PK) | Unique user identifier |
-| org_id | uuid | NOT NULL, FK | ✅ (FK) | Organization membership |
-| email | varchar(255) | NOT NULL, UK | ✅ (UK) | Email (case-insensitive) |
-| password_hash | varchar(255) | NOT NULL | ❌ | Bcrypt/Argon2 hash, never plain text |
-| first_name | varchar(100) | NOT NULL | ❌ | User first name (PII) |
-| last_name | varchar(100) | NOT NULL | ❌ | User last name (PII) |
-| role | enum | NOT NULL, DEFAULT 'member' | ✅ | RBAC: admin / member / viewer |
-| email_verified_at | timestamp | NULL | ❌ | Null until email verified |
-| created_at | timestamp | NOT NULL, DEFAULT NOW() | ✅ | Record creation |
-| deleted_at | timestamp | NULL | ✅ | Soft delete (GDPR right-to-erasure) |
+| Column            | Type         | Constraints                | Index   | Purpose                              |
+| ----------------- | ------------ | -------------------------- | ------- | ------------------------------------ |
+| id                | uuid         | PK                         | ✅ (PK) | Unique user identifier               |
+| org_id            | uuid         | NOT NULL, FK               | ✅ (FK) | Organization membership              |
+| email             | varchar(255) | NOT NULL, UK               | ✅ (UK) | Email (case-insensitive)             |
+| password_hash     | varchar(255) | NOT NULL                   | ❌      | Bcrypt/Argon2 hash, never plain text |
+| first_name        | varchar(100) | NOT NULL                   | ❌      | User first name (PII)                |
+| last_name         | varchar(100) | NOT NULL                   | ❌      | User last name (PII)                 |
+| role              | enum         | NOT NULL, DEFAULT 'member' | ✅      | RBAC: admin / member / viewer        |
+| email_verified_at | timestamp    | NULL                       | ❌      | Null until email verified            |
+| created_at        | timestamp    | NOT NULL, DEFAULT NOW()    | ✅      | Record creation                      |
+| deleted_at        | timestamp    | NULL                       | ✅      | Soft delete (GDPR right-to-erasure)  |
 
 **Indexes:**
+
 - PRIMARY KEY (id)
 - UNIQUE (org_id, email) — One email per org (but same email across orgs is OK)
 - INDEX (org_id, deleted_at) — Fast lookup of active users in an org
 - INDEX (email_verified_at) — Unverified users for periodic cleanup
 
 **Constraints:**
+
 - FOREIGN KEY (org_id) REFERENCES organizations(id) ON DELETE CASCADE
 - CHECK (email LIKE '%@%.%') — Basic email validation in DB
 - CHECK (role IN ('admin', 'member', 'viewer'))
 
 **Notes:**
+
 - Password never stored in plain text; always hashed
 - email_verified_at is nullable; used for email verification workflow
 - deleted_at triggers soft-delete for GDPR compliance
@@ -209,26 +215,28 @@ erDiagram
 
 ### subscriptions
 
-| Column | Type | Constraints | Index | Purpose |
-| ------ | ---- | ----------- | ----- | ------- |
-| id | uuid | PK | ✅ (PK) | Unique subscription identifier |
-| org_id | uuid | NOT NULL, FK | ✅ (FK) | Organization (for soft-delete cascade) |
-| status | enum | NOT NULL, DEFAULT 'active' | ✅ | active / paused / cancelled |
-| plan | enum | NOT NULL | ✅ | Pricing tier: starter / pro / enterprise |
-| billing_interval | enum | NOT NULL | ❌ | monthly / annual |
-| price_cents | integer | NOT NULL | ❌ | Price in cents (never use floats for money!) |
-| started_at | timestamp | NOT NULL | ✅ | Subscription start date |
-| renews_at | timestamp | NOT NULL | ✅ | Next billing date |
-| cancelled_at | timestamp | NULL | ❌ | When subscription was cancelled |
-| created_at | timestamp | NOT NULL, DEFAULT NOW() | ✅ | Record creation |
-| deleted_at | timestamp | NULL | ✅ | Soft delete timestamp |
+| Column           | Type      | Constraints                | Index   | Purpose                                      |
+| ---------------- | --------- | -------------------------- | ------- | -------------------------------------------- |
+| id               | uuid      | PK                         | ✅ (PK) | Unique subscription identifier               |
+| org_id           | uuid      | NOT NULL, FK               | ✅ (FK) | Organization (for soft-delete cascade)       |
+| status           | enum      | NOT NULL, DEFAULT 'active' | ✅      | active / paused / cancelled                  |
+| plan             | enum      | NOT NULL                   | ✅      | Pricing tier: starter / pro / enterprise     |
+| billing_interval | enum      | NOT NULL                   | ❌      | monthly / annual                             |
+| price_cents      | integer   | NOT NULL                   | ❌      | Price in cents (never use floats for money!) |
+| started_at       | timestamp | NOT NULL                   | ✅      | Subscription start date                      |
+| renews_at        | timestamp | NOT NULL                   | ✅      | Next billing date                            |
+| cancelled_at     | timestamp | NULL                       | ❌      | When subscription was cancelled              |
+| created_at       | timestamp | NOT NULL, DEFAULT NOW()    | ✅      | Record creation                              |
+| deleted_at       | timestamp | NULL                       | ✅      | Soft delete timestamp                        |
 
 **Indexes:**
+
 - PRIMARY KEY (id)
 - INDEX (org_id, status) — Fast lookup of active subscriptions per org
 - INDEX (renews_at) — Find subscriptions due for renewal
 
 **Constraints:**
+
 - FOREIGN KEY (org_id) REFERENCES organizations(id) ON DELETE CASCADE
 - CHECK (status IN ('active', 'paused', 'cancelled'))
 - CHECK (plan IN ('starter', 'pro', 'enterprise'))
@@ -237,6 +245,7 @@ erDiagram
 - CHECK (renews_at > started_at)
 
 **Notes:**
+
 - price_cents is integer (e.g., $9.99 = 999 cents); avoids float rounding errors
 - renews_at is calculated from started_at + interval (monthly/annual)
 - cancelled_at is used to calculate churn metrics; never hard-delete
@@ -245,30 +254,33 @@ erDiagram
 
 ### audit_log (Compliance / GDPR)
 
-| Column | Type | Constraints | Index | Purpose |
-| ------ | ---- | ----------- | ----- | ------- |
-| id | uuid | PK | ✅ (PK) | Log entry ID |
-| org_id | uuid | NOT NULL, FK | ✅ (FK) | Organization (for access control) |
-| user_id | uuid | NOT NULL, FK | ✅ (FK) | User who made the change |
-| entity_type | varchar(50) | NOT NULL | ✅ | Table name: users / subscriptions / ... |
-| entity_id | uuid | NOT NULL | ✅ | ID of changed record |
-| action | enum | NOT NULL | ❌ | create / update / delete |
-| old_values | jsonb | NULL | ❌ | Previous column values (before update) |
-| new_values | jsonb | NULL | ❌ | New column values (after update) |
-| created_at | timestamp | NOT NULL, DEFAULT NOW() | ✅ | Immutable timestamp |
+| Column      | Type        | Constraints             | Index   | Purpose                                 |
+| ----------- | ----------- | ----------------------- | ------- | --------------------------------------- |
+| id          | uuid        | PK                      | ✅ (PK) | Log entry ID                            |
+| org_id      | uuid        | NOT NULL, FK            | ✅ (FK) | Organization (for access control)       |
+| user_id     | uuid        | NOT NULL, FK            | ✅ (FK) | User who made the change                |
+| entity_type | varchar(50) | NOT NULL                | ✅      | Table name: users / subscriptions / ... |
+| entity_id   | uuid        | NOT NULL                | ✅      | ID of changed record                    |
+| action      | enum        | NOT NULL                | ❌      | create / update / delete                |
+| old_values  | jsonb       | NULL                    | ❌      | Previous column values (before update)  |
+| new_values  | jsonb       | NULL                    | ❌      | New column values (after update)        |
+| created_at  | timestamp   | NOT NULL, DEFAULT NOW() | ✅      | Immutable timestamp                     |
 
 **Indexes:**
+
 - PRIMARY KEY (id)
 - INDEX (org_id, entity_type, entity_id, created_at) — Compliance queries
 - INDEX (user_id, created_at) — User activity history
 
 **Constraints:**
+
 - FOREIGN KEY (org_id) REFERENCES organizations(id)
 - FOREIGN KEY (user_id) REFERENCES users(id)
 - CHECK (action IN ('create', 'update', 'delete'))
 - CHECK (old_values IS NOT NULL OR new_values IS NOT NULL) — At least one should have values
 
 **Notes:**
+
 - Immutable: never update or soft-delete audit records
 - old_values/new_values stored as JSON for flexibility
 - Retention policy: keep for 7 years (compliance requirement)
@@ -281,15 +293,18 @@ erDiagram
 ## Normalization Analysis
 
 This schema is in **Third Normal Form (3NF)**:
+
 - ✅ No transitive dependencies
 - ✅ Every non-key column depends on the primary key
 - ✅ Data redundancy minimized
 
 **Denormalization Opportunities:**
+
 - Consider caching `org.name` in users table for fast display (denormalized; trade-off between normalization and query speed)
 - Consider materialized view for monthly revenue (avoid re-calculating from invoices + charges every query)
 
 **Query Performance Trade-offs:**
+
 - JOIN users + subscriptions + invoices = slower (3 table join)
 - Alternative: cache subscription price in invoice.price_cents (denormalized, but faster reports)
 ```
@@ -317,22 +332,22 @@ This schema is in **Third Normal Form (3NF)**:
 
 ### Access Control
 
-| Table | Admin | User | Service Account |
-| ----- | ----- | ---- | --------------- |
-| organizations | Full | Read own org only | Read |
-| users | Full | Read own + org members | Read |
-| subscriptions | Full | Read own org only | Read + Update |
-| audit_log | Full | Read own org only | Read |
+| Table         | Admin | User                   | Service Account |
+| ------------- | ----- | ---------------------- | --------------- |
+| organizations | Full  | Read own org only      | Read            |
+| users         | Full  | Read own + org members | Read            |
+| subscriptions | Full  | Read own org only      | Read + Update   |
+| audit_log     | Full  | Read own org only      | Read            |
 
 ### Data Retention
 
-| Table | Retention | Policy |
-| ----- | --------- | ------ |
-| organizations | Forever | Never delete (soft-delete only) |
-| users | 7 years post-deletion | Soft-delete, keep for GDPR compliance |
-| subscriptions | Forever | Never delete (financial records) |
-| audit_log | 7 years | Compliance requirement |
-| old_values/new_values in audit_log | 7 years | Never delete; immutable |
+| Table                              | Retention             | Policy                                |
+| ---------------------------------- | --------------------- | ------------------------------------- |
+| organizations                      | Forever               | Never delete (soft-delete only)       |
+| users                              | 7 years post-deletion | Soft-delete, keep for GDPR compliance |
+| subscriptions                      | Forever               | Never delete (financial records)      |
+| audit_log                          | 7 years               | Compliance requirement                |
+| old_values/new_values in audit_log | 7 years               | Never delete; immutable               |
 ```
 
 ### 6. Compliance & Security
@@ -375,19 +390,19 @@ This schema is in **Third Normal Form (3NF)**:
 
 ### Indexes Created
 
-| Table | Index | Reason |
-| ----- | ----- | ------ |
-| organizations | PRIMARY KEY (id) | PK lookup |
-| organizations | UNIQUE (slug) | Query by slug |
-| organizations | INDEX (deleted_at) | Exclude soft-deleted orgs |
-| users | PRIMARY KEY (id) | PK lookup |
-| users | UNIQUE (org_id, email) | Unique email per org |
-| users | INDEX (org_id, deleted_at) | List active users in org |
-| users | INDEX (email_verified_at) | Find unverified users |
-| subscriptions | PRIMARY KEY (id) | PK lookup |
-| subscriptions | INDEX (org_id, status) | Active subscriptions per org |
-| subscriptions | INDEX (renews_at) | Find subscriptions due for renewal |
-| audit_log | INDEX (org_id, entity_type, entity_id, created_at) | Compliance queries |
+| Table         | Index                                              | Reason                             |
+| ------------- | -------------------------------------------------- | ---------------------------------- |
+| organizations | PRIMARY KEY (id)                                   | PK lookup                          |
+| organizations | UNIQUE (slug)                                      | Query by slug                      |
+| organizations | INDEX (deleted_at)                                 | Exclude soft-deleted orgs          |
+| users         | PRIMARY KEY (id)                                   | PK lookup                          |
+| users         | UNIQUE (org_id, email)                             | Unique email per org               |
+| users         | INDEX (org_id, deleted_at)                         | List active users in org           |
+| users         | INDEX (email_verified_at)                          | Find unverified users              |
+| subscriptions | PRIMARY KEY (id)                                   | PK lookup                          |
+| subscriptions | INDEX (org_id, status)                             | Active subscriptions per org       |
+| subscriptions | INDEX (renews_at)                                  | Find subscriptions due for renewal |
+| audit_log     | INDEX (org_id, entity_type, entity_id, created_at) | Compliance queries                 |
 
 ### Slow Queries to Avoid
 
@@ -451,11 +466,12 @@ If migrating from old schema to new:
 ### 10. Sign-Off
 
 ```markdown
-- [ ] Data Architect: __________ Date: ______
-- [ ] Backend Lead: __________ Date: ______
-- [ ] DBA: __________ Date: ______
-- [ ] Compliance: __________ Date: ______
+- [ ] Data Architect: ****\_\_**** Date: **\_\_**
+- [ ] Backend Lead: ****\_\_**** Date: **\_\_**
+- [ ] DBA: ****\_\_**** Date: **\_\_**
+- [ ] Compliance: ****\_\_**** Date: **\_\_**
 ```
+
 ```
 
 ---
@@ -481,3 +497,4 @@ If migrating from old schema to new:
 - [Database Normalization](https://en.wikipedia.org/wiki/Database_normalization)
 - [GDPR Compliance for Data Storage](https://gdpr-info.eu/)
 - [ERD Diagram Tool](https://www.lucidchart.com/) — Visual schema design
+```

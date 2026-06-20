@@ -39,8 +39,8 @@ servers:
     description: "Staging"
 
 security:
-  - BearerAuth: []  # Default auth for all endpoints
-  - ApiKeyAuth: []  # Alternative: API key auth
+  - BearerAuth: [] # Default auth for all endpoints
+  - ApiKeyAuth: [] # Alternative: API key auth
 
 components:
   securitySchemes:
@@ -92,15 +92,16 @@ components:
           properties:
             code:
               type: "string"
-              enum: [
-                "VALIDATION_ERROR",
-                "AUTHENTICATION_FAILED",
-                "AUTHORIZATION_FAILED",
-                "RESOURCE_NOT_FOUND",
-                "CONFLICT",
-                "RATE_LIMITED",
-                "INTERNAL_ERROR"
-              ]
+              enum:
+                [
+                  "VALIDATION_ERROR",
+                  "AUTHENTICATION_FAILED",
+                  "AUTHORIZATION_FAILED",
+                  "RESOURCE_NOT_FOUND",
+                  "CONFLICT",
+                  "RATE_LIMITED",
+                  "INTERNAL_ERROR",
+                ]
             message:
               type: "string"
               description: "Human-readable error message"
@@ -398,18 +399,18 @@ paths:
 
 ## HTTP Status Code Guide
 
-| Status | Meaning | When to Use | Example |
-| ------ | ------- | ----------- | ------- |
-| 200 OK | Request successful | GET, successful PUT/PATCH | Fetched user |
-| 201 Created | Resource created | Successful POST | User signup |
-| 400 Bad Request | Invalid request | Validation error | Missing email field |
-| 401 Unauthorized | Auth required or failed | Missing/invalid JWT | No bearer token |
-| 403 Forbidden | Auth passed but unauthorized | Insufficient permissions | Non-admin accessing admin endpoint |
-| 404 Not Found | Resource doesn't exist | ID not found | User ID doesn't exist |
-| 409 Conflict | Violates constraint | Duplicate email | Email already registered |
-| 429 Too Many Requests | Rate limited | Exceeded rate limit | 6th signup attempt in 1 hour |
-| 500 Internal Error | Server error | Unhandled exception | Database connection failed |
-| 503 Service Unavailable | Server temporarily down | Maintenance, downtime | Database unavailable |
+| Status                  | Meaning                      | When to Use               | Example                            |
+| ----------------------- | ---------------------------- | ------------------------- | ---------------------------------- |
+| 200 OK                  | Request successful           | GET, successful PUT/PATCH | Fetched user                       |
+| 201 Created             | Resource created             | Successful POST           | User signup                        |
+| 400 Bad Request         | Invalid request              | Validation error          | Missing email field                |
+| 401 Unauthorized        | Auth required or failed      | Missing/invalid JWT       | No bearer token                    |
+| 403 Forbidden           | Auth passed but unauthorized | Insufficient permissions  | Non-admin accessing admin endpoint |
+| 404 Not Found           | Resource doesn't exist       | ID not found              | User ID doesn't exist              |
+| 409 Conflict            | Violates constraint          | Duplicate email           | Email already registered           |
+| 429 Too Many Requests   | Rate limited                 | Exceeded rate limit       | 6th signup attempt in 1 hour       |
+| 500 Internal Error      | Server error                 | Unhandled exception       | Database connection failed         |
+| 503 Service Unavailable | Server temporarily down      | Maintenance, downtime     | Database unavailable               |
 
 ---
 
@@ -454,18 +455,21 @@ Retry-After: 3600
 ## Versioning Strategy
 
 ### Option 1: URL Versioning (Recommended)
+
 ```
 GET /v1/users    (stable version)
 GET /v2/users    (new version with breaking changes)
 ```
 
 ### Option 2: Header Versioning
+
 ```
 GET /users
 API-Version: 1
 ```
 
 ### Option 3: Accept Header
+
 ```
 GET /users
 Accept: application/vnd.acme.v1+json
@@ -474,6 +478,7 @@ Accept: application/vnd.acme.v1+json
 **Recommendation:** Use URL versioning. It's explicit, discoverable, and follows REST conventions.
 
 **Deprecation Policy:**
+
 - v1 released 2026-06-20
 - v2 released 2026-12-20 (v1 + breaking changes)
 - v1 sunset date: 2027-06-20 (6 months notice)
@@ -483,15 +488,15 @@ Accept: application/vnd.acme.v1+json
 
 ## Error Codes (Client Guide)
 
-| Code | HTTP Status | Meaning | Action |
-| ---- | ----------- | ------- | ------ |
-| VALIDATION_ERROR | 400 | Request data invalid | Fix field and retry |
-| AUTHENTICATION_FAILED | 401 | Auth failed or missing | Login again, get new token |
-| AUTHORIZATION_FAILED | 403 | Not permitted | Contact admin for access |
-| RESOURCE_NOT_FOUND | 404 | Resource doesn't exist | Check ID is correct |
-| CONFLICT | 409 | Constraint violation | Unique field duplicate or data conflict |
-| RATE_LIMITED | 429 | Too many requests | Wait and retry (see Retry-After header) |
-| INTERNAL_ERROR | 500 | Server error | Retry after delay; contact support if persists |
+| Code                  | HTTP Status | Meaning                | Action                                         |
+| --------------------- | ----------- | ---------------------- | ---------------------------------------------- |
+| VALIDATION_ERROR      | 400         | Request data invalid   | Fix field and retry                            |
+| AUTHENTICATION_FAILED | 401         | Auth failed or missing | Login again, get new token                     |
+| AUTHORIZATION_FAILED  | 403         | Not permitted          | Contact admin for access                       |
+| RESOURCE_NOT_FOUND    | 404         | Resource doesn't exist | Check ID is correct                            |
+| CONFLICT              | 409         | Constraint violation   | Unique field duplicate or data conflict        |
+| RATE_LIMITED          | 429         | Too many requests      | Wait and retry (see Retry-After header)        |
+| INTERNAL_ERROR        | 500         | Server error           | Retry after delay; contact support if persists |
 
 ---
 

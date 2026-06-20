@@ -21,7 +21,7 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 
 ## Post-Incident Review Template
 
-```markdown
+````markdown
 # Post-Incident Review: [Incident Title]
 
 **Date:** 2026-06-20  
@@ -44,17 +44,17 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 
 [Detailed, minute-by-minute account of what happened]
 
-| Time (UTC) | Event | Owner | Note |
-| ---------- | ----- | ----- | ---- |
-| 09:30 | Payment service becomes unresponsive | [Monitor alert] | Threshold: response time > 5 seconds |
-| 09:32 | On-call engineer (Alice) pages incident commander (Bob) | Alice | Slack: #incidents |
-| 09:35 | Incident declared and #incident-war-room Slack created | Bob | Severity: Critical |
-| 09:37 | Database team investigates connection pool | Carol | Finds pool exhausted (max 100, used 100) |
-| 09:40 | Root cause identified: transaction service change | Dev team | Code review of yesterday's PR |
-| 09:42 | Rollback initiated | DevOps | Deployment takes 3 minutes |
-| 09:45 | Service recovered (traffic processing normally) | [Monitor alert] | Response time back to < 100ms |
-| 10:00 | All queries processed, no backlog remains | Bob | Recovery confirmed |
-| 10:15 | Post-incident review scheduled | Bob | Tomorrow at 10:00 AM |
+| Time (UTC) | Event                                                   | Owner           | Note                                     |
+| ---------- | ------------------------------------------------------- | --------------- | ---------------------------------------- |
+| 09:30      | Payment service becomes unresponsive                    | [Monitor alert] | Threshold: response time > 5 seconds     |
+| 09:32      | On-call engineer (Alice) pages incident commander (Bob) | Alice           | Slack: #incidents                        |
+| 09:35      | Incident declared and #incident-war-room Slack created  | Bob             | Severity: Critical                       |
+| 09:37      | Database team investigates connection pool              | Carol           | Finds pool exhausted (max 100, used 100) |
+| 09:40      | Root cause identified: transaction service change       | Dev team        | Code review of yesterday's PR            |
+| 09:42      | Rollback initiated                                      | DevOps          | Deployment takes 3 minutes               |
+| 09:45      | Service recovered (traffic processing normally)         | [Monitor alert] | Response time back to < 100ms            |
+| 10:00      | All queries processed, no backlog remains               | Bob             | Recovery confirmed                       |
+| 10:15      | Post-incident review scheduled                          | Bob             | Tomorrow at 10:00 AM                     |
 
 ---
 
@@ -71,13 +71,13 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 
 ### Business Impact
 
-| Metric | Value | Impact |
-| ------ | ----- | ------ |
-| Estimated transactions lost | ~2,000 | $50,000 revenue impact |
-| SLA breach? | Yes | 45 min > 30 min SLA |
-| Data loss? | No | No data lost; all transactions queued and processed after recovery |
-| Customer complaints | ~50 | Support team received 50 tickets |
-| PR impact | Medium | Issue mentioned on Twitter by 2 users |
+| Metric                      | Value  | Impact                                                             |
+| --------------------------- | ------ | ------------------------------------------------------------------ |
+| Estimated transactions lost | ~2,000 | $50,000 revenue impact                                             |
+| SLA breach?                 | Yes    | 45 min > 30 min SLA                                                |
+| Data loss?                  | No     | No data lost; all transactions queued and processed after recovery |
+| Customer complaints         | ~50    | Support team received 50 tickets                                   |
+| PR impact                   | Medium | Issue mentioned on Twitter by 2 users                              |
 
 ### Technical Impact
 
@@ -99,6 +99,7 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 3. **Code Review:** Transaction service PR merged yesterday
    ↓
 4. **Finding:** Database connection not closed in error path
+
    ```python
    # BAD (before)
    try:
@@ -106,14 +107,16 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
        connection.close()  # Only called on success!
    except Exception as e:
        pass  # Connection never closed on error ❌
-   
+
    # GOOD (after)
    try:
        db.execute("UPDATE subscription SET status = 'paid'")
    finally:
        connection.close()  # Always closed ✅
    ```
-5. **Why it happened:** 
+````
+
+5. **Why it happened:**
    - PR author didn't use try-finally pattern
    - Code review missed the bug
    - No connection pool monitoring alert
@@ -123,6 +126,7 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 **Primary Cause:** Database connection not closed in error handling path
 
 **Contributing Factors:**
+
 1. Code review didn't catch the bug (insufficient expertise)
 2. No monitoring alert for connection pool exhaustion
 3. No integration test for error scenario
@@ -163,21 +167,21 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 
 ### Technical Lessons
 
-| Lesson | How to Prevent |
-| ------ | -------------- |
-| Connection pools need monitoring | Add CloudWatch alert: connection pool > 80% |
-| Error paths need same testing as happy path | Require error scenario tests in PR template |
-| Try-finally is critical for resource cleanup | Add ESLint rule to enforce try-finally |
-| Database timeouts should be short | Set query timeout to 5 seconds (was 30) |
+| Lesson                                       | How to Prevent                              |
+| -------------------------------------------- | ------------------------------------------- |
+| Connection pools need monitoring             | Add CloudWatch alert: connection pool > 80% |
+| Error paths need same testing as happy path  | Require error scenario tests in PR template |
+| Try-finally is critical for resource cleanup | Add ESLint rule to enforce try-finally      |
+| Database timeouts should be short            | Set query timeout to 5 seconds (was 30)     |
 
 ### Process Lessons
 
-| Lesson | How to Prevent |
-| ------ | -------------- |
-| Code review of connection code needs 2 reviewers | Add code path ownership rules |
-| Friday 5 PM deploys risky | No deployments after 3 PM on Friday |
-| Runbooks need updating | Weekly runbook review meeting |
-| On-call rotation needs better handoff | 30-min overlap for knowledge transfer |
+| Lesson                                           | How to Prevent                        |
+| ------------------------------------------------ | ------------------------------------- |
+| Code review of connection code needs 2 reviewers | Add code path ownership rules         |
+| Friday 5 PM deploys risky                        | No deployments after 3 PM on Friday   |
+| Runbooks need updating                           | Weekly runbook review meeting         |
+| On-call rotation needs better handoff            | 30-min overlap for knowledge transfer |
 
 ---
 
@@ -245,11 +249,11 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 
 [Monitor progress of fixes]
 
-| Action Item | Owner | Status | Target | Actual | Notes |
-| ----------- | ----- | ------ | ------ | ------ | ----- |
-| Connection pool monitoring | Carol | Not Started | 2026-06-24 | - | Waiting on CloudWatch training |
-| Error scenario test | Alice | In Progress | 2026-06-24 | - | 50% complete, code review today |
-| Code review checklist | Bob | Done ✅ | 2026-06-28 | 2026-06-21 | Already using in PRs |
+| Action Item                | Owner | Status      | Target     | Actual     | Notes                           |
+| -------------------------- | ----- | ----------- | ---------- | ---------- | ------------------------------- |
+| Connection pool monitoring | Carol | Not Started | 2026-06-24 | -          | Waiting on CloudWatch training  |
+| Error scenario test        | Alice | In Progress | 2026-06-24 | -          | 50% complete, code review today |
+| Code review checklist      | Bob   | Done ✅     | 2026-06-28 | 2026-06-21 | Already using in PRs            |
 
 ---
 
@@ -299,11 +303,11 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 **Responsible:** Bob (Tech Lead)  
 **When:** Every Monday @ 10 AM
 
-| Week | P0 Items | P1 Items | P2 Items | Status |
-| ---- | -------- | -------- | -------- | ------ |
-| Week 1 | 2/2 done ✅ | 3/5 in progress | - | On track |
-| Week 2 | Done ✅ | 5/5 done ✅ | 1/3 started | Ahead |
-| Week 3 | - | Done ✅ | 3/3 done ✅ | Complete |
+| Week   | P0 Items    | P1 Items        | P2 Items    | Status   |
+| ------ | ----------- | --------------- | ----------- | -------- |
+| Week 1 | 2/2 done ✅ | 3/5 in progress | -           | On track |
+| Week 2 | Done ✅     | 5/5 done ✅     | 1/3 started | Ahead    |
+| Week 3 | -           | Done ✅         | 3/3 done ✅ | Complete |
 
 ### Follow-Up Incident Review
 
@@ -311,6 +315,7 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 **Purpose:** Verify action items completed, monitor metrics
 
 **Checklist:**
+
 - [ ] All P0 items complete?
 - [ ] All P1 items complete?
 - [ ] Metrics improved? (connection pool avg, response time, error rate)
@@ -324,6 +329,7 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 ### Appendix A — Logs & Evidence
 
 **Database logs (2026-06-20 09:30 - 09:45):**
+
 ```
 [09:30:15] Connection pool exhausted (100/100 active)
 [09:30:20] New connection request denied (no available connections)
@@ -332,6 +338,7 @@ A **Post-Incident Review (PIR)** (also called Post-Mortem or Incident Retrospect
 ```
 
 **Application logs (2026-06-20 09:30 - 09:45):**
+
 ```
 ERROR: Database connection timeout
 ERROR: Failed to process payment for transaction_id=1234567
@@ -372,9 +379,9 @@ ERROR: Connection pool unavailable
 
 ## Sign-Off
 
-- [ ] Incident Commander: __________ Date: ______
-- [ ] Tech Lead: __________ Date: ______
-- [ ] Engineering Manager: __________ Date: ______
+- [ ] Incident Commander: ****\_\_**** Date: **\_\_**
+- [ ] Tech Lead: ****\_\_**** Date: **\_\_**
+- [ ] Engineering Manager: ****\_\_**** Date: **\_\_**
 
 ---
 
@@ -384,6 +391,7 @@ ERROR: Connection pool unavailable
 - [PagerDuty Incident Response](https://www.pagerduty.com/incident-response/) — Incident management best practices
 - [Etsy: Blameless Postmortems](https://www.etsy.com/) — Pioneered blameless review culture
 - [Incident.io](https://incident.io/) — Post-incident management platform
+
 ```
 
 ---
@@ -408,3 +416,4 @@ ERROR: Connection pool unavailable
 - [Google: Site Reliability Engineering (SRE) Book](https://sre.google/books/)
 - [PagerDuty: Incident Response Training](https://www.pagerduty.com/)
 - [Etsy: Blameless Postmortems](https://www.etsy.com/codeascraft)
+```

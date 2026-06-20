@@ -12,6 +12,7 @@ description: Trigger for when Integration Architect receives APIs that don't mat
 **Event:** Implemented API contract doesn't match architecture specification
 
 **Detection:**
+
 - API endpoint doesn't match OpenAPI spec
 - Request/response schema deviates from spec
 - Missing error handling defined in spec
@@ -20,6 +21,7 @@ description: Trigger for when Integration Architect receives APIs that don't mat
 - Response format inconsistent with architectural standard
 
 **Severity:**
+
 - 🔴 Critical: Breaking API contract, frontend can't consume
 - 🟠 High: Deviates from spec, requires frontend workaround
 - 🟡 Medium: Minor deviation, adds technical debt
@@ -59,15 +61,18 @@ description: Trigger for when Integration Architect receives APIs that don't mat
    - Is rate limiting correct?
 
 2. **Integration Architect** leaves PR comment with compliance checklist:
-   ```markdown
+
+   ````markdown
    ## API Compliance Check: ❌ NEEDS FIXES
-   
+
    ### Issues Found:
+
    - [ ] Response format doesn't match spec (missing `success` and `meta` fields)
    - [ ] Error response doesn't follow standard error format
    - [ ] Missing Retry-After header on rate limit response
-   
+
    ### Expected Response:
+
    ```json
    {
      "success": true,
@@ -75,21 +80,26 @@ description: Trigger for when Integration Architect receives APIs that don't mat
      "meta": { "timestamp": "...", "request_id": "..." }
    }
    ```
-   
+   ````
+
    ### Actual Response:
+
    ```json
    {
      "user": { ... },
      "token": "..."
    }
    ```
-   
+
    ### Action Required:
    - [ ] Update response to match spec
    - [ ] Add error response format
    - [ ] Verify in OpenAPI tests
-   
+
    Please fix and re-request review.
+
+   ```
+
    ```
 
 3. **Backend Developer** fixes the API to match spec
@@ -109,7 +119,7 @@ description: Trigger for when Integration Architect receives APIs that don't mat
 - [ ] Error responses follow standard format
 - [ ] Authentication matches spec
 - [ ] Rate limiting implemented
-- [ ] Response headers (Retry-After, X-RateLimit-*, etc.) included
+- [ ] Response headers (Retry-After, X-RateLimit-\*, etc.) included
 - [ ] Pagination implemented for list endpoints
 - [ ] Timestamps in UTC, ISO 8601 format
 
@@ -144,6 +154,7 @@ pnpm run test:api-contracts
 ## Architecture Benefits
 
 This hook ensures:
+
 - ✅ Frontend and backend teams aligned before dev
 - ✅ No surprises during integration
 - ✅ Consistent API patterns across microservices

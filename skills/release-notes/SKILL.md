@@ -26,7 +26,7 @@ description: Generates release notes summarizing new features, bug fixes, perfor
 
 **Release Date:** 2026-06-20  
 **Release Type:** Major | Minor | Patch | Security | Beta  
-**Status:** Stable | Release Candidate | Beta  
+**Status:** Stable | Release Candidate | Beta
 
 ---
 
@@ -51,11 +51,13 @@ description: Generates release notes summarizing new features, bug fixes, perfor
 
 **How to Use:**
 ```
+
 1. Click "Sign Up with Google"
 2. Authorize the app
 3. Account created automatically
 4. Redirected to dashboard
-```
+
+````
 
 **Documentation:** [Link to help article]
 
@@ -158,20 +160,22 @@ localStorage.setItem('session_id', response.sessionId);
 fetch('/api/users', {
   credentials: 'include' // Send cookies
 });
-```
+````
 
 **After:** Using JWT tokens
+
 ```javascript
 // New
-localStorage.setItem('token', response.token);
-fetch('/api/users', {
+localStorage.setItem("token", response.token);
+fetch("/api/users", {
   headers: {
-    'Authorization': `Bearer ${token}`
-  }
+    Authorization: `Bearer ${token}`,
+  },
 });
 ```
 
 **Steps:**
+
 1. [ ] Update login endpoint: POST `/oauth/authorize` → returns JWT
 2. [ ] Update all API calls to use `Authorization: Bearer {token}`
 3. [ ] Remove session cookie logic
@@ -187,6 +191,7 @@ fetch('/api/users', {
 ### For Backend Teams
 
 **Database Migration:**
+
 ```bash
 # 1. Backup current database
 pg_dump -U postgres app_db > backup-v1.sql
@@ -199,18 +204,21 @@ SELECT COUNT(*) FROM users; -- Should match old table
 ```
 
 **API Changes:**
+
 - Update response format in all endpoints
 - Add JWT validation middleware
 - Remove session middleware
 - Update tests for new auth
 
 **Testing:**
+
 ```bash
 pnpm test:integration  # All tests must pass
 pnpm test:api         # API contract tests
 ```
 
 **Deployment:**
+
 1. [ ] Deploy v2.0-beta to staging
 2. [ ] Verify frontend compatibility
 3. [ ] Load test (1,000 concurrent users)
@@ -227,10 +235,10 @@ pnpm test:api         # API contract tests
 
 ### CVEs Fixed
 
-| CVE | Severity | Component | Fix |
-| --- | -------- | --------- | --- |
-| CVE-2026-1234 | High | Dependency: jwt-decode v8.0.2 | Updated to v9.0.0 |
-| CVE-2026-5678 | Medium | Custom code: SQLi in search | Input validation added |
+| CVE           | Severity | Component                     | Fix                    |
+| ------------- | -------- | ----------------------------- | ---------------------- |
+| CVE-2026-1234 | High     | Dependency: jwt-decode v8.0.2 | Updated to v9.0.0      |
+| CVE-2026-5678 | Medium   | Custom code: SQLi in search   | Input validation added |
 
 ### Security Improvements
 
@@ -248,11 +256,11 @@ pnpm test:api         # API contract tests
 
 [Be honest about what's not perfect]
 
-| Issue | Workaround | Fix Timeline |
-| ----- | ---------- | ------------ |
+| Issue                              | Workaround                 | Fix Timeline                 |
+| ---------------------------------- | -------------------------- | ---------------------------- |
 | OAuth signup slow on first attempt | Retry, or use email signup | v2.1 (optimizing OAuth flow) |
-| Dark mode doesn't apply to modals | Refresh page | v2.2 (known design issue) |
-| File export in CSV format only | Use API directly | v2.1 (JSON export planned) |
+| Dark mode doesn't apply to modals  | Refresh page               | v2.2 (known design issue)    |
+| File export in CSV format only     | Use API directly           | v2.1 (JSON export planned)   |
 
 ---
 
@@ -274,13 +282,13 @@ v3.0 (2027-06-20): Session auth and Basic auth removed
 
 [Show improvements]
 
-| Metric | Before | After | Improvement |
-| ------ | ------ | ----- | ----------- |
-| Database query (user list) | 400ms | 200ms | 50% faster |
-| API response p95 | 250ms | 100ms | 60% faster |
-| Page load time (Lighthouse LCP) | 3.2s | 2.4s | 25% faster |
-| Bundle size (minified + gzipped) | 450KB | 360KB | 20% smaller |
-| Cold start (serverless function) | 250ms | 80ms | 68% faster |
+| Metric                           | Before | After | Improvement |
+| -------------------------------- | ------ | ----- | ----------- |
+| Database query (user list)       | 400ms  | 200ms | 50% faster  |
+| API response p95                 | 250ms  | 100ms | 60% faster  |
+| Page load time (Lighthouse LCP)  | 3.2s   | 2.4s  | 25% faster  |
+| Bundle size (minified + gzipped) | 450KB  | 360KB | 20% smaller |
+| Cold start (serverless function) | 250ms  | 80ms  | 68% faster  |
 
 ---
 
@@ -288,11 +296,11 @@ v3.0 (2027-06-20): Session auth and Basic auth removed
 
 [Who should upgrade?]
 
-| Version | Node.js | PostgreSQL | Browsers |
-| ------- | ------- | ---------- | -------- |
-| v1.x | 18+ | 14, 15 | All modern browsers |
-| v2.0 | 20+ | 16+ | Chrome 100+, Firefox 100+, Safari 15+, Edge 100+ |
-| v2.0 (LTS) | 18+ | 15, 16 | Same as v1.x (backport support) |
+| Version    | Node.js | PostgreSQL | Browsers                                         |
+| ---------- | ------- | ---------- | ------------------------------------------------ |
+| v1.x       | 18+     | 14, 15     | All modern browsers                              |
+| v2.0       | 20+     | 16+        | Chrome 100+, Firefox 100+, Safari 15+, Edge 100+ |
+| v2.0 (LTS) | 18+     | 15, 16     | Same as v1.x (backport support)                  |
 
 **Recommendation:** Upgrade to v2.0 for latest features. Stay on v1.x if you need Node 18 support (LTS patch provided until 2027-06-20).
 
@@ -359,9 +367,10 @@ See [full changelog](./CHANGELOG.md) for all changes in v2.0.
 
 ## Sign-Off
 
-- [ ] Product Manager: __________ Date: ______
-- [ ] Tech Lead: __________ Date: ______
-- [ ] DevOps / Release Manager: __________ Date: ______
+- [ ] Product Manager: ****\_\_**** Date: **\_\_**
+- [ ] Tech Lead: ****\_\_**** Date: **\_\_**
+- [ ] DevOps / Release Manager: ****\_\_**** Date: **\_\_**
+
 ```
 
 ---
@@ -398,3 +407,4 @@ See [full changelog](./CHANGELOG.md) for all changes in v2.0.
 - [Semantic Versioning](https://semver.org/)
 - [Keep a Changelog](https://keepachangelog.com/)
 - [Release Notes Best Practices](https://wiki.archlinux.org/title/Arch_Linux_release_notes)
+```

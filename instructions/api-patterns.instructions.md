@@ -22,15 +22,19 @@ withAuth() → withRateLimit() → validate(schema) → repository/service → r
 ## Response Format
 
 **Success (200, 201):**
+
 ```json
 {
   "success": true,
-  "data": { /* resource data */ },
+  "data": {
+    /* resource data */
+  },
   "meta": { "timestamp": "2026-06-20T14:32:45Z", "request_id": "req_123" }
 }
 ```
 
 **Error (4xx, 5xx):**
+
 ```json
 {
   "success": false,
@@ -50,6 +54,7 @@ withAuth() → withRateLimit() → validate(schema) → repository/service → r
 - Keep business logic in service layer, persistence in repository
 
 Example:
+
 ```typescript
 // Route handler (handler only routes)
 const user = await userRepository.findById(id);

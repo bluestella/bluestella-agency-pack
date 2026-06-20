@@ -13,8 +13,9 @@ description: "Enforce authentication, authorization, secrets management, and inp
 - **REJECT** 403 Forbidden if user lacks required role/permission
 
 Example:
+
 ```typescript
-router.get('/users/:id', withAuth(), async (req, res) => {
+router.get("/users/:id", withAuth(), async (req, res) => {
   // withAuth() verifies JWT and attaches req.user
   const { user_id, org_id } = req.user;
   // Check: Does this user have access to the requested resource?
@@ -34,6 +35,7 @@ router.get('/users/:id', withAuth(), async (req, res) => {
 ## Secrets & Sensitive Data Management
 
 ### Never Log or Return:
+
 - ❌ Passwords (hashed or plain)
 - ❌ JWT tokens, API keys, credentials
 - ❌ PII: email, phone, SSN, tax ID, credit card
@@ -41,12 +43,13 @@ router.get('/users/:id', withAuth(), async (req, res) => {
 - ❌ API secrets or third-party credentials
 
 ### Correct Patterns:
+
 ```typescript
 // ❌ BAD: Logs plaintext credentials
-console.log('Auth token:', token);
+console.log("Auth token:", token);
 
 // ✅ GOOD: Logs redacted token
-console.log('Auth token:', token.substring(0, 10) + '***');
+console.log("Auth token:", token.substring(0, 10) + "***");
 
 // ❌ BAD: Returns password in response
 return { user: { id, email, password: user.password } };
@@ -64,19 +67,20 @@ return { user: { id, email } };
 - **CHECK** for SQL injection patterns
 
 Example:
+
 ```typescript
 // ❌ BAD: SQL injection risk
 const query = `SELECT * FROM users WHERE email = '${req.body.email}'`;
 
 // ✅ GOOD: Parameterized query
-const query = 'SELECT * FROM users WHERE email = ?';
+const query = "SELECT * FROM users WHERE email = ?";
 db.execute(query, [req.body.email]);
 ```
 
 ## Forbidden Patterns
 
 - ❌ **NEVER use `eval()`** — code injection vulnerability
-- ❌ **NEVER use dynamic `require()`** — code injection vulnerability  
+- ❌ **NEVER use dynamic `require()`** — code injection vulnerability
 - ❌ **NEVER use string-interpolated SQL** — SQL injection vulnerability
 - ❌ **NEVER hardcode secrets** in code (use environment variables)
 - ❌ **NEVER commit `.env` files** to git
@@ -85,18 +89,18 @@ db.execute(query, [req.body.email]);
 
 ## OWASP Top 10 Checklist
 
-| Vulnerability | Prevention |
-| ------------- | ----------- |
-| Broken Access Control | RBAC checks on all endpoints; least-privilege IAM |
-| Cryptographic Failures | Encrypt PII at rest + in transit; TLS 1.2+ |
-| Injection (SQL, NoSQL) | Parameterized queries, Zod validation |
-| Insecure Design | Threat model (STRIDE) before coding |
-| Security Misconfiguration | Security.instructions enforcement, regular audits |
-| Vulnerable Dependencies | Dependabot alerts, pnpm audit, CodeQL |
-| Authentication Failures | Strong passwords (12+ chars), MFA for admins, JWT expiry |
-| Data Integrity Failures | Validate input, use transactions for critical ops |
-| Logging Failures | Log security events (login, permission denied); redact PII |
-| Supply Chain Risks | Review third-party packages, pin versions, audit dependencies |
+| Vulnerability             | Prevention                                                    |
+| ------------------------- | ------------------------------------------------------------- |
+| Broken Access Control     | RBAC checks on all endpoints; least-privilege IAM             |
+| Cryptographic Failures    | Encrypt PII at rest + in transit; TLS 1.2+                    |
+| Injection (SQL, NoSQL)    | Parameterized queries, Zod validation                         |
+| Insecure Design           | Threat model (STRIDE) before coding                           |
+| Security Misconfiguration | Security.instructions enforcement, regular audits             |
+| Vulnerable Dependencies   | Dependabot alerts, pnpm audit, CodeQL                         |
+| Authentication Failures   | Strong passwords (12+ chars), MFA for admins, JWT expiry      |
+| Data Integrity Failures   | Validate input, use transactions for critical ops             |
+| Logging Failures          | Log security events (login, permission denied); redact PII    |
+| Supply Chain Risks        | Review third-party packages, pin versions, audit dependencies |
 
 ## Encryption
 

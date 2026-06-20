@@ -12,6 +12,7 @@ description: Trigger for when DevOps detects security misconfiguration in infras
 **Event:** DevOps discovers security misconfiguration or risk in infrastructure
 
 **Detection:**
+
 - S3 bucket publicly accessible (world-readable)
 - Security group allows unrestricted access (0.0.0.0/0)
 - Secrets stored in plain text in config files
@@ -22,6 +23,7 @@ description: Trigger for when DevOps detects security misconfiguration in infras
 - MFA not enforced for production access
 
 **Severity:**
+
 - 🔴 Critical: Data breach or compliance violation risk
 - 🟠 High: Security risk, should fix within 24 hours
 - 🟡 Medium: Security improvement, fix within 1 week
@@ -59,6 +61,7 @@ description: Trigger for when DevOps detects security misconfiguration in infras
    - Recommended fix?
 
 3. **DevOps** posts to #security Slack channel:
+
    ```
    🚨 CRITICAL: S3 backup bucket publicly accessible
    - Bucket: app-backups-prod
@@ -66,7 +69,7 @@ description: Trigger for when DevOps detects security misconfiguration in infras
    - Compliance: GDPR violation
    - Fix: Enable BlockPublicAccess + KMS encryption
    - ETA: 1 hour
-   
+
    GitHub: #5678
    ```
 
@@ -85,16 +88,16 @@ description: Trigger for when DevOps detects security misconfiguration in infras
 
 ## Common Findings & Fixes
 
-| Finding | Fix | Effort |
-| ------- | --- | ------ |
-| S3 bucket publicly readable | Enable `BlockPublicAccess`, restrict bucket policy | 15 min |
-| Security group allows 0.0.0.0/0 | Restrict to specific IP ranges / VPN | 10 min |
-| Secrets in .env file | Move to AWS Secrets Manager | 1 hour |
-| Certificate expired | Renew certificate, verify renewal automation | 30 min |
-| DB backup unencrypted | Enable RDS encryption, re-encrypt old backups | 2 hours |
-| IAM policy too permissive | Audit and apply least-privilege principle | 1 hour |
-| CloudTrail disabled | Enable CloudTrail, set up log retention | 30 min |
-| MFA not required for prod | Add IAM policy to mandate MFA | 1 hour |
+| Finding                         | Fix                                                | Effort  |
+| ------------------------------- | -------------------------------------------------- | ------- |
+| S3 bucket publicly readable     | Enable `BlockPublicAccess`, restrict bucket policy | 15 min  |
+| Security group allows 0.0.0.0/0 | Restrict to specific IP ranges / VPN               | 10 min  |
+| Secrets in .env file            | Move to AWS Secrets Manager                        | 1 hour  |
+| Certificate expired             | Renew certificate, verify renewal automation       | 30 min  |
+| DB backup unencrypted           | Enable RDS encryption, re-encrypt old backups      | 2 hours |
+| IAM policy too permissive       | Audit and apply least-privilege principle          | 1 hour  |
+| CloudTrail disabled             | Enable CloudTrail, set up log retention            | 30 min  |
+| MFA not required for prod       | Add IAM policy to mandate MFA                      | 1 hour  |
 
 ---
 
@@ -122,6 +125,7 @@ description: Trigger for when DevOps detects security misconfiguration in infras
 ### Code Review
 
 Before deploying infrastructure changes (Terraform, CloudFormation):
+
 - [ ] Does it follow least-privilege principle?
 - [ ] Are secrets used (not hardcoded)?
 - [ ] Is encryption enabled where required?

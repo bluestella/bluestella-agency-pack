@@ -44,6 +44,7 @@ An **Architecture Decision Record (ADR)** documents a significant architectural 
 [Describe the issue or decision that needs to be made. What problem are we trying to solve? Why does this decision matter? Include any relevant background, timeline, business constraints, or technical limitations.]
 
 **Key Constraints:**
+
 - [Constraint 1 — e.g., must support 10,000 req/sec]
 - [Constraint 2 — e.g., must fit in $5K/month budget]
 - [Constraint 3 — e.g., must comply with GDPR]
@@ -63,11 +64,13 @@ An **Architecture Decision Record (ADR)** documents a significant architectural 
 ### Option 1: [Option Name]
 
 **Pros:**
+
 - [Advantage 1]
 - [Advantage 2]
 - [Cost: $X/month]
 
 **Cons:**
+
 - [Disadvantage 1]
 - [Disadvantage 2]
 - [Hidden cost: Y]
@@ -90,12 +93,12 @@ An **Architecture Decision Record (ADR)** documents a significant architectural 
 
 **Decision Matrix:**
 
-| Criterion | Weight | Option 1 | Option 2 | Option 3 |
-| --------- | ------ | -------- | -------- | -------- |
-| [Criterion 1] | 30% | [Score/X] | [Score/X] | [Score/X] |
-| [Criterion 2] | 25% | [Score/X] | [Score/X] | [Score/X] |
-| [Criterion 3] | 20% | [Score/X] | [Score/X] | [Score/X] |
-| **Total** | **100%** | **[Total]** | **[Total]** | **[Total]** |
+| Criterion     | Weight   | Option 1    | Option 2    | Option 3    |
+| ------------- | -------- | ----------- | ----------- | ----------- |
+| [Criterion 1] | 30%      | [Score/X]   | [Score/X]   | [Score/X]   |
+| [Criterion 2] | 25%      | [Score/X]   | [Score/X]   | [Score/X]   |
+| [Criterion 3] | 20%      | [Score/X]   | [Score/X]   | [Score/X]   |
+| **Total**     | **100%** | **[Total]** | **[Total]** | **[Total]** |
 
 ---
 
@@ -140,16 +143,15 @@ An **Architecture Decision Record (ADR)** documents a significant architectural 
 
 ## Sign-Off
 
-- [ ] Solution Architect: __________ Date: ______
-- [ ] Tech Lead: __________ Date: ______
-- [ ] Security Architect (if security-related): __________ Date: ______
+- [ ] Solution Architect: ****\_\_**** Date: **\_\_**
+- [ ] Tech Lead: ****\_\_**** Date: **\_\_**
+- [ ] Security Architect (if security-related): ****\_\_**** Date: **\_\_**
 
 ---
 
 ## Notes
 
 [Any additional context, open questions, or follow-up work needed?]
-
 ```
 
 ---
@@ -172,6 +174,7 @@ An **Architecture Decision Record (ADR)** documents a significant architectural 
 Our SaaS application requires a scalable, cost-effective database solution. Expected growth: 1M users within 2 years, with peak queries of 5,000 req/sec. Must support complex queries (joins, aggregations) for reporting. GDPR compliance required (data residency, right to erasure).
 
 **Key Constraints:**
+
 - Max database cost: $10K/month
 - Must support ACID transactions for financial operations
 - Must support both operational queries (OLTP) and analytical queries (OLAP)
@@ -192,6 +195,7 @@ We have decided to use **PostgreSQL 16** as our primary database because it meet
 ### Option 1: PostgreSQL 16 (RDS Multi-AZ)
 
 **Pros:**
+
 - ACID compliance for financial operations
 - Complex queries supported (JOINs, aggregations, CTEs)
 - GDPR-compliant (can self-manage data residency)
@@ -200,6 +204,7 @@ We have decided to use **PostgreSQL 16** as our primary database because it meet
 - No vendor lock-in (can migrate if needed)
 
 **Cons:**
+
 - Manual scaling (requires monitoring and intervention)
 - Operational overhead (backups, patching, monitoring)
 - Less suitable for unstructured data
@@ -209,12 +214,14 @@ We have decided to use **PostgreSQL 16** as our primary database because it meet
 ### Option 2: DynamoDB
 
 **Pros:**
+
 - Serverless scaling (auto-scale to any throughput)
 - Low operational overhead
 - Cost: ~$3K/month for expected scale
 - Built-in backups and disaster recovery
 
 **Cons:**
+
 - Limited query flexibility (no JOINs, complex aggregations hard)
 - Eventual consistency model (risky for financial operations)
 - GDPR compliance harder (Dynamo export/delete is slow)
@@ -226,11 +233,13 @@ We have decided to use **PostgreSQL 16** as our primary database because it meet
 ### Option 3: Aurora PostgreSQL (managed)
 
 **Pros:**
+
 - Managed PostgreSQL (AWS handles scaling)
 - Automatic failover and backups
 - Cost: ~$7K/month
 
 **Cons:**
+
 - Higher cost than self-managed RDS
 - Still some operational overhead
 - Vendor lock-in (AWS-specific features)
@@ -257,13 +266,13 @@ We chose PostgreSQL over DynamoDB because:
 
 **Decision Matrix:**
 
-| Criterion | Weight | PostgreSQL | DynamoDB | Aurora |
-| --------- | ------ | ---------- | -------- | ------ |
-| Query Flexibility | 30% | 10/10 | 3/10 | 10/10 |
-| ACID Compliance | 25% | 10/10 | 2/10 | 10/10 |
-| GDPR Compliance | 20% | 9/10 | 4/10 | 9/10 |
-| Cost | 15% | 9/10 | 10/10 | 6/10 |
-| No Vendor Lock-in | 10% | 10/10 | 1/10 | 3/10 |
+| Criterion            | Weight   | PostgreSQL  | DynamoDB   | Aurora      |
+| -------------------- | -------- | ----------- | ---------- | ----------- |
+| Query Flexibility    | 30%      | 10/10       | 3/10       | 10/10       |
+| ACID Compliance      | 25%      | 10/10       | 2/10       | 10/10       |
+| GDPR Compliance      | 20%      | 9/10        | 4/10       | 9/10        |
+| Cost                 | 15%      | 9/10        | 10/10      | 6/10        |
+| No Vendor Lock-in    | 10%      | 10/10       | 1/10       | 3/10        |
 | **Total (weighted)** | **100%** | **9.35/10** | **3.4/10** | **8.65/10** |
 
 ---

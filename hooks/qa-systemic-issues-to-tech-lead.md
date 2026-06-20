@@ -12,6 +12,7 @@ description: Trigger for when QA finds repeated failures indicating systemic cod
 **Event:** Pattern of repeated QA failures indicates systemic code quality issue
 
 **Detection:**
+
 - Same test failing on multiple PRs (not one-off bugs)
 - Same component failing different test scenarios
 - Same error type (e.g., "undefined property" appearing 5+ times)
@@ -20,6 +21,7 @@ description: Trigger for when QA finds repeated failures indicating systemic cod
 - Same issue reopened multiple times
 
 **Severity:**
+
 - 🔴 Critical: Major architectural issue blocking all PRs
 - 🟠 High: Multiple PRs failing, needs urgent review
 - 🟡 Medium: Recurring issue, should address in team meeting
@@ -66,6 +68,7 @@ description: Trigger for when QA finds repeated failures indicating systemic cod
 2. **QA** creates GitHub issue labeled `quality:systemic` + severity
 
 3. **QA** posts to #team Slack:
+
    ```
    @tech-lead FYI: We're seeing database connection leaks in 5 different services.
    Same pattern: connections not closed in error handlers.
@@ -93,6 +96,7 @@ description: Trigger for when QA finds repeated failures indicating systemic cod
    - Is it a code review issue? (reviewers not catching it?)
 
 2. **Gather evidence:**
+
    ```
    SELECT failed_test_count FROM qa_dashboard
    WHERE issue_type = 'connection_leak'
@@ -106,13 +110,13 @@ description: Trigger for when QA finds repeated failures indicating systemic cod
 
 ### Solution Options
 
-| Option | Effort | Prevents Recurrence | Choose If |
-| ------ | ------ | ------------------- | --------- |
-| **Team training** | 2 hours | 80% | Knowledge gap |
-| **Add ESLint rule** | 4 hours | 95% | Tooling gap |
-| **Code review guideline** | 1 hour | 70% | Process gap |
-| **Architectural fix** | 2-5 days | 100% | Architectural issue |
-| **Combination** | 3 days | 99% | Multiple causes |
+| Option                    | Effort   | Prevents Recurrence | Choose If           |
+| ------------------------- | -------- | ------------------- | ------------------- |
+| **Team training**         | 2 hours  | 80%                 | Knowledge gap       |
+| **Add ESLint rule**       | 4 hours  | 95%                 | Tooling gap         |
+| **Code review guideline** | 1 hour   | 70%                 | Process gap         |
+| **Architectural fix**     | 2-5 days | 100%                | Architectural issue |
+| **Combination**           | 3 days   | 99%                 | Multiple causes     |
 
 ### Implementation
 
@@ -158,11 +162,13 @@ description: Trigger for when QA finds repeated failures indicating systemic cod
 ## Follow-Up
 
 **After 1 week:**
+
 - [ ] Are new PRs following the pattern?
 - [ ] Any resistance or blockers?
 - [ ] Should we enforce more strictly?
 
 **After 1 month:**
+
 - [ ] Is the issue completely resolved?
 - [ ] Has the team internalized the lesson?
 - [ ] Should this be documented in our coding standards?

@@ -12,6 +12,7 @@ description: Trigger for when Developer signals feature is ready for DevOps depl
 **Event:** Developer marks feature as deployment-ready (all PR reviews complete, tests passing)
 
 **Detection:**
+
 - All PRs merged to main branch
 - All CI/CD checks passing (lint, test, build, SonarCloud, CodeQL)
 - All tech lead gates passing
@@ -49,6 +50,7 @@ description: Trigger for when Developer signals feature is ready for DevOps depl
 ## Required Action
 
 1. **Developer** creates deployment readiness checklist:
+
    ```markdown
    - [ ] All PRs merged to main
    - [ ] All CI checks passing
@@ -63,6 +65,7 @@ description: Trigger for when Developer signals feature is ready for DevOps depl
    ```
 
 2. **Developer** posts in #deployments Slack channel:
+
    ```
    @devops OAuth 2.0 ready for production deployment
    - Feature branch: feat/oauth
@@ -126,6 +129,7 @@ description: Trigger for when Developer signals feature is ready for DevOps depl
 ## Rollback Criteria
 
 Rollback if:
+
 - Error rate increases > 5%
 - Response time p95 > 2x baseline
 - Critical user-facing bug discovered
