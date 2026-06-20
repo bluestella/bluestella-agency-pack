@@ -70,7 +70,7 @@ get_vscode_global() {
   fi
 }
 
-ALL_IDES=("Claude Code" "Cursor" "VS Code" "Windsurf" "Antigravity" "Trae")
+ALL_IDES=("Claude Code" "Cursor" "VS Code" "Windsurf" "Antigravity" "Trae" "GitHub")
 
 detect_claude_code() { [[ -d "${HOME}/.claude" ]]; }
 detect_cursor()      { command -v cursor >/dev/null 2>&1 || [[ -d "${HOME}/.cursor" ]]; }
@@ -78,6 +78,7 @@ detect_vscode()      { command -v code >/dev/null 2>&1 || [[ -d "${HOME}/Library
 detect_windsurf()    { command -v windsurf >/dev/null 2>&1 || [[ -d "${HOME}/.codeium" ]] || [[ -d "${HOME}/.windsurf" ]]; }
 detect_antigravity() { [[ -d "${HOME}/.gemini/antigravity-ide" ]] || [[ -d "${HOME}/.gemini/antigravity" ]]; }
 detect_trae()        { [[ -d "${HOME}/.trae" ]] || [[ -d "/Applications/Trae.app" ]]; }
+detect_github()      { [[ -d "${HOME}/.github" ]] || [[ -d ".github" ]]; }
 
 is_detected() {
   case "$1" in
@@ -87,6 +88,7 @@ is_detected() {
     "Windsurf")     detect_windsurf ;;
     "Antigravity")  detect_antigravity ;;
     "Trae")         detect_trae ;;
+    "GitHub")       detect_github ;;
     *)              return 1 ;;
   esac
 }
@@ -99,6 +101,7 @@ ide_label() {
     "Windsurf")     printf "%-14s  %s" "Windsurf"     "(.windsurf/rules)" ;;
     "Antigravity")  printf "%-14s  %s" "Antigravity"  "(prompted)" ;;
     "Trae")         printf "%-14s  %s" "Trae"         "(prompted)" ;;
+    "GitHub")       printf "%-14s  %s" "GitHub"       "(.github)" ;;
   esac
 }
 
@@ -148,6 +151,7 @@ resolve_dest_root() {
       "Cursor")        echo ".cursor/rules" ;;
       "VS Code")       echo ".vscode" ;;
       "Windsurf")      echo ".windsurf/rules" ;;
+      "GitHub")        echo ".github" ;;
       *)               resolve_project_root "$name" ;;
     esac
   else
@@ -156,6 +160,7 @@ resolve_dest_root() {
       "Cursor")        echo "${HOME}/.cursor/rules" ;;
       "VS Code")       get_vscode_global ;;
       "Windsurf")      echo "${HOME}/.windsurf/rules" ;;
+      "GitHub")        echo "${HOME}/.github" ;;
       *)               resolve_global_root "$name" ;;
     esac
   fi
@@ -221,7 +226,7 @@ interactive_select() {
 
     printf "\n"
     printf "  ------------------------------------------------\n"
-    printf "  ${C_CYAN}[1-6]${C_RESET} toggle   ${C_CYAN}[a]${C_RESET} all   ${C_CYAN}[n]${C_RESET} none   ${C_CYAN}[d]${C_RESET} detected\n"
+    printf "  ${C_CYAN}[1-7]${C_RESET} toggle   ${C_CYAN}[a]${C_RESET} all   ${C_CYAN}[n]${C_RESET} none   ${C_CYAN}[d]${C_RESET} detected\n"
     printf "  ${C_GREEN}[Enter]${C_RESET} confirm   ${C_RED}[q]${C_RESET} quit\n"
     printf "\n"
     printf "  >> "
